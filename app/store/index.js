@@ -47,6 +47,7 @@ const MigratedStorage = {
     } catch (error) {
       Logger.error(error, { message: 'Failed to set item' });
     }
+    // throw new Error('Failed async storage storage fetch.');
   },
   async removeItem(key) {
     try {
@@ -117,8 +118,9 @@ const persistConfig = {
   stateReconciler: autoMergeLevel2, // see "Merge Process" section for details.
   migrate: createMigrate(migrations, { debug: false }),
   timeout: TIMEOUT,
-  writeFailHandler: (error) =>
-    Logger.error(error, { message: 'Error persisting data' }), // Log error if saving state fails
+  writeFailHandler: async (error) => {
+    Logger.error(error, { message: 'Error persisting data' }); // Log error if saving state fails
+  },
 };
 
 const pReducer = persistReducer(persistConfig, rootReducer);
@@ -129,6 +131,7 @@ export const store = createStore(pReducer);
  * Initialize services after persist is completed
  */
 const onPersistComplete = () => {
+  console.log('onPersistComplete');
   EngineService.initalizeEngine(store);
   Authentication.init(store);
 };

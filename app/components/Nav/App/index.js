@@ -60,6 +60,9 @@ import { TurnOffRememberMeModal } from '../../../components/UI/TurnOffRememberMe
 import { UpdateNeeded } from '../../../components/UI/UpdateNeeded';
 import { EnableAutomaticSecurityChecksModal } from '../../../components/UI/EnableAutomaticSecurityChecksModal';
 import NetworkSettings from '../../Views/Settings/NetworksSettings/NetworkSettings';
+import { RestoreWallet } from '../../Views/RestoreWallet';
+import WalletRestored from '../../Views/RestoreWallet/WalletRestored';
+import WalletResetNeeded from '../../Views/RestoreWallet/WalletResetNeeded';
 
 const Stack = createStackNavigator();
 /**
@@ -157,6 +160,26 @@ const OnboardingRootNav = () => (
       name="Webview"
       header={null}
       component={SimpleWebviewScreen}
+    />
+  </Stack.Navigator>
+);
+
+const VaultRecoveryFlow = () => (
+  <Stack.Navigator
+    initialRouteName={Routes.VAULT_RECOVERY.RESTORE_WALLET}
+    screenOptions={{ headerShown: false }}
+  >
+    <Stack.Screen
+      name={Routes.VAULT_RECOVERY.RESTORE_WALLET}
+      component={RestoreWallet}
+    />
+    <Stack.Screen
+      name={Routes.VAULT_RECOVERY.WALLET_RESTORED}
+      component={WalletRestored}
+    />
+    <Stack.Screen
+      name={Routes.VAULT_RECOVERY.WALLET_RESET_NEEDED}
+      component={WalletResetNeeded}
     />
   </Stack.Navigator>
 );

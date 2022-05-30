@@ -52,6 +52,7 @@ import { LAST_INCOMING_TX_BLOCK_INFO } from '../constants/storage';
 import { isZero } from '../util/lodash';
 import { MetaMetricsEvents } from '../core/Analytics';
 import AnalyticsV2 from '../util/analyticsV2';
+import { backupVault } from './backupVault';
 
 const NON_EMPTY = 'NON_EMPTY';
 
@@ -77,9 +78,10 @@ class Engine {
   /**
    * Creates a CoreController instance
    */
-  constructor(initialState = {}) {
+  constructor(initialState = {}, initialKeyringState) {
     if (!Engine.instance) {
       this.controllerMessenger = new ControllerMessenger();
+      console.log('Engine', 'creating a new engine instance');
       const preferencesController = new PreferencesController(
         {},
         {
@@ -244,28 +246,33 @@ class Engine {
 
       const additionalKeyrings = [QRHardwareKeyring];
 
+      const keyRingState =
+        initialKeyringState || initialState.KeyringController;
+
+      const newKeyRingController = new KeyringController(
+        {
+          removeIdentity: preferencesController.removeIdentity.bind(
+            preferencesController,
+          ),
+          syncIdentities: preferencesController.syncIdentities.bind(
+            preferencesController,
+          ),
+          updateIdentities: preferencesController.updateIdentities.bind(
+            preferencesController,
+          ),
+          setSelectedAddress: preferencesController.setSelectedAddress.bind(
+            preferencesController,
+          ),
+          setAccountLabel: preferencesController.setAccountLabel.bind(
+            preferencesController,
+          ),
+        },
+        { encryptor, keyringTypes: additionalKeyrings },
+        keyRingState,
+      );
+
       const controllers = [
-        new KeyringController(
-          {
-            removeIdentity: preferencesController.removeIdentity.bind(
-              preferencesController,
-            ),
-            syncIdentities: preferencesController.syncIdentities.bind(
-              preferencesController,
-            ),
-            updateIdentities: preferencesController.updateIdentities.bind(
-              preferencesController,
-            ),
-            setSelectedAddress: preferencesController.setSelectedAddress.bind(
-              preferencesController,
-            ),
-            setAccountLabel: preferencesController.setAccountLabel.bind(
-              preferencesController,
-            ),
-          },
-          { encryptor, keyringTypes: additionalKeyrings },
-          initialState.KeyringController,
-        ),
+        newKeyRingController,
         new AccountTrackerController({
           onPreferencesStateChange: (listener) =>
             preferencesController.subscribe(listener),
@@ -400,6 +407,7 @@ class Engine {
           showApprovalRequest: () => null,
         }),
       ];
+
       // set initial state
       // TODO: Pass initial state into each controller constructor instead
       // This is being set post-construction for now to ensure it's functionally equivalent with
@@ -415,6 +423,7 @@ class Engine {
           controller.update(initialState[controller.name]);
         }
       }
+
       this.datamodel = new ComposableController(
         controllers,
         this.controllerMessenger,
@@ -450,9 +459,28 @@ class Engine {
       );
       this.configureControllersOnNetworkChange();
       this.startPolling();
+      this.handleVaultBackup();
       Engine.instance = this;
     }
+
     return Engine.instance;
+  }
+
+  handleVaultBackup() {
+    const { KeyringController } = this.context;
+    KeyringController.subscribe((state) =>
+      backupVault(state)
+        .then((result) => {
+          if (result.success) {
+            Logger.log('Engine', 'Vault back up successful', result);
+          } else {
+            Logger.log('Engine', 'Vault backup failed', result);
+          }
+        })
+        .catch((error) => {
+          Logger.error(error, 'Engine Vault backup failed');
+        }),
+    );
   }
 
   startPolling() {
@@ -797,6 +825,12 @@ class Engine {
 
     return true;
   };
+
+  destroyEngineInstance() {
+    console.log('destroyEngine');
+    this.resetState();
+    Engine.instance = null;
+  }
 }
 
 let instance: Engine;
@@ -877,14 +911,20 @@ export default {
   resetState() {
     return instance.resetState();
   },
+
+  destroyEngine() {
+    instance && instance.destroyEngineInstance();
+    instance = null;
+  },
+
   sync(data: any) {
     return instance.sync(data);
   },
   refreshTransactionHistory(forceCheck = false) {
     return instance.refreshTransactionHistory(forceCheck);
   },
-  init(state: {} | undefined) {
-    instance = new Engine(state);
+  init(state: {} | undefined, keyringState = null) {
+    instance = new Engine(state, keyringState);
     Object.freeze(instance);
     return instance;
   },

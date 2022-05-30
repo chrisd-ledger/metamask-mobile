@@ -49,6 +49,12 @@ const Routes = {
     CONTACT_FORM: 'ContactForm',
     REVEAL_PRIVATE_CREDENTIAL: 'RevealPrivateCredentialView',
   },
+  VAULT_RECOVERY: {
+    ID: 'RestoreWallet',
+    RESTORE_WALLET: 'RestoreWallet',
+    WALLET_RESTORED: 'WalletRestored',
+    WALLET_RESET_NEEDED: 'WalletResetNeeded',
+  },
 };
 
 export default Routes;

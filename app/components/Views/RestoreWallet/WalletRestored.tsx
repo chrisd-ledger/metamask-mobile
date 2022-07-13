@@ -30,6 +30,7 @@ const WalletRestored = () => {
 
   const handleOnNext = useCallback(async () => {
     const credentials = await SecureKeychain.getGenericPassword();
+    console.log('WalletRestored credentials', credentials);
     if (credentials) {
       const { KeyringController } = Engine.context as any;
       try {

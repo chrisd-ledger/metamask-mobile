@@ -105,7 +105,7 @@ class EngineService {
     if (keyringState) {
       const instance = Engine.init(state, keyringState);
       if (instance) {
-        this.updateControllers(importedStore, Engine);
+        this.updateControllers(importedStore, instance);
         return {
           success: true,
         };

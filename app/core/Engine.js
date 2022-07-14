@@ -826,8 +826,13 @@ class Engine {
     return true;
   };
 
+  removeAllListeners() {
+    this.controllerMessenger.clearSubscriptions();
+  }
+
   destroyEngineInstance() {
     console.log('destroyEngine');
+    this.removeAllListeners();
     this.resetState();
     Engine.instance = null;
   }

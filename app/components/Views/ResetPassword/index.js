@@ -57,7 +57,6 @@ import {
   CONFIRM_CHANGE_PASSWORD_INPUT_BOX_ID,
 } from '../../../constants/test-ids';
 import { LoginOptionsSwitch } from '../../UI/LoginOptionsSwitch';
-import { recreateVaultWithNewPassword } from '../../../core/Vault';
 
 const createStyles = (colors) =>
   StyleSheet.create({
@@ -436,11 +435,82 @@ class ResetPassword extends PureComponent {
    */
   recreateVault = async () => {
     const { originalPassword, password: newPassword } = this.state;
-    await recreateVaultWithNewPassword(
-      originalPassword,
-      newPassword,
-      this.props.selectedAddress,
+    const { KeyringController, PreferencesController } = Engine.context;
+    const seedPhrase = await this.getSeedPhrase();
+    const oldPrefs = PreferencesController.state;
+
+    let importedAccounts = [];
+    try {
+      const keychainPassword = originalPassword;
+      // Get imported accounts
+      const simpleKeyrings = KeyringController.state.keyrings.filter(
+        (keyring) => keyring.type === 'Simple Key Pair',
+      );
+      for (let i = 0; i < simpleKeyrings.length; i++) {
+        const simpleKeyring = simpleKeyrings[i];
+        const simpleKeyringAccounts = await Promise.all(
+          simpleKeyring.accounts.map((account) =>
+            KeyringController.exportAccount(keychainPassword, account),
+          ),
+        );
+        importedAccounts = [...importedAccounts, ...simpleKeyringAccounts];
+      }
+    } catch (e) {
+      Logger.error(
+        e,
+        'error while trying to get imported accounts on recreate vault',
+      );
+    }
+
+    // Recreate keyring with password given to this method
+    const type = await Authentication.componentAuthenticationType(
+      this.state.biometryChoice,
+      this.state.rememberMe,
     );
+
+    await Authentication.newWalletAndRestore(
+      newPassword,
+      type,
+      seedPhrase,
+      false,
+    );
+
+    // Get props to restore vault
+    const hdKeyring = KeyringController.state.keyrings[0];
+    const existingAccountCount = hdKeyring.accounts.length;
+    const selectedAddress = this.props.selectedAddress;
+
+    // Create previous accounts again
+    for (let i = 0; i < existingAccountCount - 1; i++) {
+      await KeyringController.addNewAccount();
+    }
+
+    try {
+      // Import imported accounts again
+      for (let i = 0; i < importedAccounts.length; i++) {
+        await KeyringController.importAccountWithStrategy('privateKey', [
+          importedAccounts[i],
+        ]);
+      }
+    } catch (e) {
+      Logger.error(
+        e,
+        'error while trying to import accounts on recreate vault',
+      );
+    }
+
+    //Persist old account/identities names
+    const preferencesControllerState = PreferencesController.state;
+    const prefUpdates = syncPrefs(oldPrefs, preferencesControllerState);
+
+    // Set preferencesControllerState again
+    await PreferencesController.update(prefUpdates);
+    // Reselect previous selected account if still available
+    if (hdKeyring.accounts.includes(selectedAddress)) {
+      PreferencesController.setSelectedAddress(selectedAddress);
+    } else {
+      PreferencesController.setSelectedAddress(hdKeyring.accounts[0]);
+    }
   };
 
   /**

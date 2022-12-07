@@ -342,7 +342,6 @@ class Settings extends PureComponent {
       analyticsEnabled,
       hintText: manualBackup,
     });
-
     if (this.props.route?.params?.scrollToBottom)
       this.scrollView?.scrollToEnd({ animated: true });
   };

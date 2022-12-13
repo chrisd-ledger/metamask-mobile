@@ -745,9 +745,9 @@ class DrawerView extends PureComponent {
     this.trackEvent(MetaMetricsEvents.NAVIGATION_TAPS_SETTINGS);
   };
 
-  onPressLogout = async () => {
+  onPressLock = async () => {
     const { passwordSet } = this.props;
-    await Authentication.logout();
+    await Authentication.lockApp();
     if (!passwordSet) {
       this.props.navigation.navigate('OnboardingRootNav', {
         screen: Routes.ONBOARDING.NAV,
@@ -759,7 +759,7 @@ class DrawerView extends PureComponent {
     }
   };
 
-  logout = () => {
+  lock = () => {
     Alert.alert(
       strings('drawer.lock_title'),
       '',
@@ -771,7 +771,7 @@ class DrawerView extends PureComponent {
         },
         {
           text: strings('drawer.lock_ok'),
-          onPress: this.onPressLogout,
+          onPress: this.onPressLock,
         },
       ],
       { cancelable: false },
@@ -1038,7 +1038,7 @@ class DrawerView extends PureComponent {
         {
           name: strings('drawer.lock'),
           icon: this.getFeatherIcon('log-out'),
-          action: this.logout,
+          action: this.lock,
           // ...generateTestId(Platform, DRAWER_VIEW_LOCK_ICON_ID),
           testID: DRAWER_VIEW_LOCK_TEXT_ID,
         },

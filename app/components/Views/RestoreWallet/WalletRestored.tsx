@@ -3,9 +3,9 @@ import React, { useCallback } from 'react';
 import { View, Image } from 'react-native';
 import { strings } from '../../../../locales/i18n';
 import { createStyles } from './styles';
-import BaseText, {
-  BaseTextVariant,
-} from '../../../component-library/components/BaseText';
+import Text, {
+  TextVariants,
+} from '../../../component-library/components/Texts/Text';
 import StyledButton from '../../UI/StyledButton';
 import { createNavigationDetails } from '../../../util/navigation/navUtils';
 import Routes from '../../../constants/navigation/Routes';
@@ -54,21 +54,15 @@ const WalletRestored = () => {
       <View style={styles.content}>
         <View style={styles.images}>
           <Image source={onboardingDeviceImage} />
-          <BaseText variant={BaseTextVariant.lHeadingLG}>
+          <Text variant={TextVariants.lHeadingLG}>
             {strings('wallet_restored.wallet_restored_title')}
-          </BaseText>
-          <BaseText
-            variant={BaseTextVariant.sBodyMD}
-            style={styles.description}
-          >
+          </Text>
+          <Text variant={TextVariants.sBodyMD} style={styles.description}>
             {strings('wallet_restored.wallet_restored_description')}
-          </BaseText>
-          <BaseText
-            variant={BaseTextVariant.sBodyMD}
-            style={styles.description}
-          >
+          </Text>
+          <Text variant={TextVariants.sBodyMD} style={styles.description}>
             {strings('wallet_restored.wallet_restored_manual_backup')}
-          </BaseText>
+          </Text>
         </View>
       </View>
       <View style={styles.actionButtonWrapper}>

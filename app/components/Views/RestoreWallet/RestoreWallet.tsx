@@ -3,9 +3,9 @@ import React, { useCallback, useState } from 'react';
 import { View, Image, ActivityIndicator } from 'react-native';
 import { strings } from '../../../../locales/i18n';
 import { createStyles } from './styles';
-import BaseText, {
-  BaseTextVariant,
-} from '../../../component-library/components/BaseText';
+import Text, {
+  TextVariants,
+} from '../../../component-library/components/Texts/Text';
 import StyledButton from '../../UI/StyledButton';
 import { createNavigationDetails } from '../../../util/navigation/navUtils';
 import Routes from '../../../constants/navigation/Routes';
@@ -49,15 +49,12 @@ const RestoreWallet = () => {
       <View style={styles.content}>
         <View style={styles.images}>
           <Image source={onboardingDeviceImage} />
-          <BaseText variant={BaseTextVariant.lHeadingLG}>
+          <Text variant={TextVariants.lHeadingLG}>
             {strings('restore_wallet.restore_needed_title')}
-          </BaseText>
-          <BaseText
-            variant={BaseTextVariant.sBodyMD}
-            style={styles.description}
-          >
+          </Text>
+          <Text variant={TextVariants.sBodyMD} style={styles.description}>
             {strings('restore_wallet.restore_needed_description')}
-          </BaseText>
+          </Text>
         </View>
       </View>
       <View style={styles.actionButtonWrapper}>

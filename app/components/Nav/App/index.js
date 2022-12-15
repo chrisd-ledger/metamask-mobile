@@ -181,11 +181,11 @@ const App = ({ selectedAddress, userLoggedIn }) => {
       try {
         if (existingUser && selectedAddress) {
           await Authentication.appTriggeredAuth(selectedAddress);
-          navigator.replace(Routes.ONBOARDING.HOME_NAV);
+          navigator.navigate(Routes.ONBOARDING.HOME_NAV);
         }
         //Cancel auth if the existing user has not been set
       } catch (error) {
-        await Authentication.logout(false);
+        await Authentication.lockApp(false);
         trackErrorAsAnalytics(
           'App: Max Attempts Reached',
           error?.message,

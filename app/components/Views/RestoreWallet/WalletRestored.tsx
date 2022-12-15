@@ -30,21 +30,21 @@ const WalletRestored = () => {
 
   const handleOnNext = useCallback(async () => {
     const credentials = await SecureKeychain.getGenericPassword();
-    console.log('WalletRestored credentials', credentials);
+    console.log('vault/ WalletRestored credentials', credentials);
     if (credentials) {
       const { KeyringController } = Engine.context as any;
       try {
         await KeyringController.submitPassword(credentials.password);
         // Only way to land back on Login is to log out, which clears credentials (meaning we should not show biometric button)
-        console.log('WalletRestored login');
+        console.log('vault/ WalletRestored login');
         dispatch(logIn());
-        navigation.replace('HomeNav');
+        navigation.navigate('HomeNav');
       } catch (error) {
-        console.log('WalletRestored not logged in', error);
+        console.log('vault/ WalletRestored not logged in', error);
         dispatch(logOut());
       }
     } else {
-      console.log('WalletRestored no credentials');
+      console.log('vault/ WalletRestored no credentials');
       dispatch(logOut());
     }
   }, [dispatch, navigation]);

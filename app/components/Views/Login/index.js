@@ -52,6 +52,7 @@ import generateTestId from '../../../../wdio/utils/generateTestId';
 import { createRestoreWalletNavDetails } from '../RestoreWallet/RestoreWallet';
 import { parseVaultValue } from '../../../util/validators';
 import { getVaultFromBackup } from '../../../core/backupVault';
+import SecureKeychain from '../../../core/SecureKeychain';
 
 const deviceHeight = Device.getDeviceHeight();
 const breakPoint = deviceHeight < 700;

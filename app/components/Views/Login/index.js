@@ -281,7 +281,7 @@ class Login extends PureComponent {
   }
 
   handleBackPress = async () => {
-    await Authentication.logout();
+    await Authentication.lockApp();
     return false;
   };
 

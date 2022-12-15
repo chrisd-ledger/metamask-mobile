@@ -10,11 +10,9 @@ import StyledButton from '../../UI/StyledButton';
 import { createNavigationDetails } from '../../../util/navigation/navUtils';
 import Routes from '../../../constants/navigation/Routes';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useDispatch } from 'react-redux';
-import { logIn, logOut } from '../../../actions/user';
+import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
-import Engine from '../../../core/Engine';
-import SecureKeychain from '../../../core/SecureKeychain';
+import { Authentication } from '../../../core';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const onboardingDeviceImage = require('../../../images/swaps_onboard_device.png');
@@ -24,30 +22,36 @@ export const createWalletRestoredNavDetails = createNavigationDetails(
 );
 
 const WalletRestored = () => {
-  const dispatch = useDispatch();
   const styles = createStyles();
   const navigation = useNavigation();
+  const selectedAddress = useSelector(
+    (state: any) =>
+      state.engine.backgroundState.PreferencesController.selectedAddress,
+  );
 
   const handleOnNext = useCallback(async () => {
-    const credentials = await SecureKeychain.getGenericPassword();
-    console.log('vault/ WalletRestored credentials', credentials);
+    const credentials = await Authentication.getPassword();
     if (credentials) {
-      const { KeyringController } = Engine.context as any;
+      console.log('vault/ WalletRestored credentials', credentials);
       try {
-        await KeyringController.submitPassword(credentials.password);
+        const authData = await Authentication.getType();
+        await Authentication.userEntryAuth(
+          credentials.password,
+          authData,
+          selectedAddress,
+        );
         // Only way to land back on Login is to log out, which clears credentials (meaning we should not show biometric button)
         console.log('vault/ WalletRestored login');
-        dispatch(logIn());
-        navigation.navigate('HomeNav');
+        navigation.navigate(Routes.ONBOARDING.HOME_NAV);
       } catch (error) {
         console.log('vault/ WalletRestored not logged in', error);
-        dispatch(logOut());
+        Authentication.lockApp(false);
       }
     } else {
       console.log('vault/ WalletRestored no credentials');
-      dispatch(logOut());
+      Authentication.lockApp(false);
     }
-  }, [dispatch, navigation]);
+  }, [navigation, selectedAddress]);
 
   return (
     <SafeAreaView style={styles.screen}>

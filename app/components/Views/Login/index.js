@@ -306,11 +306,14 @@ class Login extends PureComponent {
     );
 
     try {
-      await Authentication.userEntryAuth(
-        password,
-        authType,
-        this.props.selectedAddress,
-      );
+      // await Authentication.userEntryAuth(
+      //   password,
+      //   authType,
+      //   this.props.selectedAddress,
+      // );
+
+      // testing vault recovery flow
+      throw new Error('Error: Cannot unlock without a previous vault.');
       // Get onboarding wizard state
       const onboardingWizard = await DefaultPreference.get(ONBOARDING_WIZARD);
       if (onboardingWizard) {
@@ -354,6 +357,7 @@ class Login extends PureComponent {
           error: strings('login.clean_vault_error'),
         });
       } else {
+        console.log('vault/ failed to enter catch block with error:', error);
         this.setState({ loading: false, error });
       }
       Logger.error(error, 'Failed to unlock');

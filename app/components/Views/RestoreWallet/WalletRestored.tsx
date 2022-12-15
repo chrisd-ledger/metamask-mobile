@@ -1,6 +1,11 @@
 /* eslint-disable import/no-commonjs */
-import React, { useCallback } from 'react';
-import { View, Image } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import {
+  View,
+  Image,
+  ActivityIndicator,
+  InteractionManager,
+} from 'react-native';
 import { strings } from '../../../../locales/i18n';
 import { createStyles } from './styles';
 import Text, {
@@ -13,6 +18,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { Authentication } from '../../../core';
+import { useAppThemeFromContext } from '../../../util/theme';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const onboardingDeviceImage = require('../../../images/swaps_onboard_device.png');
@@ -22,14 +28,16 @@ export const createWalletRestoredNavDetails = createNavigationDetails(
 );
 
 const WalletRestored = () => {
+  const [loading, setLoading] = useState<boolean>(false);
   const styles = createStyles();
   const navigation = useNavigation();
   const selectedAddress = useSelector(
     (state: any) =>
       state.engine.backgroundState.PreferencesController.selectedAddress,
   );
+  const { colors } = useAppThemeFromContext();
 
-  const handleOnNext = useCallback(async () => {
+  const finishWalletRestore = useCallback(async () => {
     const credentials = await Authentication.getPassword();
     if (credentials) {
       console.log('vault/ WalletRestored credentials', credentials);
@@ -49,11 +57,18 @@ const WalletRestored = () => {
         navigation.navigate(Routes.ONBOARDING.LOGIN);
       }
     } else {
+      // they were using password as their login method
       console.log('vault/ WalletRestored no credentials');
       Authentication.lockApp(false);
       navigation.navigate(Routes.ONBOARDING.LOGIN);
     }
   }, [navigation, selectedAddress]);
+
+  const handleOnNext = useCallback(async () => {
+    setLoading(true);
+    console.log('vault/ wallet restored handleOnNext pressed');
+    await finishWalletRestore();
+  }, [finishWalletRestore]);
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -77,7 +92,11 @@ const WalletRestored = () => {
           containerStyle={styles.actionButton}
           onPress={handleOnNext}
         >
-          {strings('wallet_restored.wallet_restored_action')}
+          {loading ? (
+            <ActivityIndicator size="small" color={colors.primary.inverse} />
+          ) : (
+            strings('wallet_restored.wallet_restored_action')
+          )}
         </StyledButton>
       </View>
     </SafeAreaView>

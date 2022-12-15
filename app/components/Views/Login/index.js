@@ -300,31 +300,46 @@ class Login extends PureComponent {
 
     const keyringState = await getVaultFromBackup();
 
-    if (keyringState.vault) {
-      console.log({ keyringState });
-      const vaultSeed = await parseVaultValue(
-        this.state.password,
-        keyringState.vault.toString(),
-      );
-
-      if (vaultSeed) {
-        // get authType
-        const { type } = await Authentication.componentAuthenticationType(
-          this.state.biometryChoice,
-          this.state.rememberMe,
+    if (keyringState.vault && this.state.password) {
+      try {
+        const vaultSeed = await parseVaultValue(
+          this.state.password,
+          keyringState.vault.toString(),
         );
-        console.log('vault/ type', type);
-        try {
-          await Authentication.storePassword(this.state.password, type);
-          console.log('vault/ vaultSeed exists, navigating');
-          navigation.navigate(...createRestoreWalletNavDetails());
-        } catch (e) {
-          console.log(
-            'vault/ Login Authentication.storePassword failed with the following error',
-            e,
+        if (vaultSeed) {
+          // get authType
+          const { type } = await Authentication.componentAuthenticationType(
+            this.state.biometryChoice,
+            this.state.rememberMe,
           );
+          console.log('vault/ type', type);
+          try {
+            await Authentication.storePassword(this.state.password, type);
+            navigation.navigate(...createRestoreWalletNavDetails());
+          } catch (e) {
+            console.log(
+              'vault/ Login Authentication.storePassword failed with the following error',
+              e,
+            );
+          }
+        } else {
+          // current password does not can't unlock the vault
+          this.setState({
+            loading: false,
+            error: strings('login.invalid_password'),
+          });
+          console.log('Vault/ Login: Invalid Password');
         }
+      } catch (error) {
+        // current password does not can't unlock the vault
+        this.setState({
+          loading: false,
+          error: strings('login.invalid_password'),
+        });
+        console.log('Vault/ Login: Invalid Password', error);
       }
+    } else {
+      console.log('vault/ no vault or password');
     }
   };
 

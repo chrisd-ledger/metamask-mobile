@@ -81,7 +81,7 @@ class Engine {
   constructor(initialState = {}, initialKeyringState) {
     if (!Engine.instance) {
       this.controllerMessenger = new ControllerMessenger();
-      console.log('Engine', 'creating a new engine instance');
+      console.log('vault/ Engine', 'creating a new engine instance');
       const preferencesController = new PreferencesController(
         {},
         {
@@ -831,7 +831,7 @@ class Engine {
   }
 
   destroyEngineInstance() {
-    console.log('destroyEngine');
+    console.log('vault/ Engine destroyEngine');
     this.removeAllListeners();
     this.resetState();
     Engine.instance = null;

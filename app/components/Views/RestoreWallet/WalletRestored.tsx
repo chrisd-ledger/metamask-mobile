@@ -46,10 +46,12 @@ const WalletRestored = () => {
       } catch (error) {
         console.log('vault/ WalletRestored not logged in', error);
         Authentication.lockApp(false);
+        navigation.navigate(Routes.ONBOARDING.LOGIN);
       }
     } else {
       console.log('vault/ WalletRestored no credentials');
       Authentication.lockApp(false);
+      navigation.navigate(Routes.ONBOARDING.LOGIN);
     }
   }, [navigation, selectedAddress]);
 

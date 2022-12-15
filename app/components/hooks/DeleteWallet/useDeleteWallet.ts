@@ -11,6 +11,7 @@ const useDeleteWallet = () => {
   const resetWalletState = useCallback(async () => {
     try {
       await Engine.resetState();
+      await resetVaultBackup();
       await Authentication.newWalletAndKeychain(`${Date.now()}`, {
         currentAuthType: AUTHENTICATION_TYPE.UNKNOWN,
       });

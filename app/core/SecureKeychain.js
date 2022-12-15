@@ -75,6 +75,7 @@ export default {
   },
 
   async resetGenericPassword() {
+    console.log('vault/ resetGenericPassword called');
     const options = { service: defaultOptions.service };
     await AsyncStorage.removeItem(BIOMETRY_CHOICE);
     await AsyncStorage.removeItem(PASSCODE_CHOICE);
@@ -88,7 +89,9 @@ export default {
       console.log('vault/ SecureKeychain getGenericPassword');
       instance.isAuthenticating = true;
       const keychainObject = await Keychain.getGenericPassword(defaultOptions);
+      console.log('vault/ Keychain.getGenericPassword', { keychainObject });
       if (keychainObject.password) {
+        console.log('vault/ keychainObject.password exists');
         const encryptedPassword = keychainObject.password;
         const decrypted = await instance.decryptPassword(encryptedPassword);
         keychainObject.password = decrypted.password;

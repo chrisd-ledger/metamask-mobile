@@ -308,38 +308,43 @@ class Login extends PureComponent {
         );
         if (vaultSeed) {
           // get authType
-          const { type } = await Authentication.componentAuthenticationType(
+          const authData = await Authentication.componentAuthenticationType(
             this.state.biometryChoice,
             this.state.rememberMe,
           );
-          console.log('vault/ type', type);
           try {
-            await Authentication.storePassword(this.state.password, type);
+            await Authentication.storePassword(
+              this.state.password,
+              authData.type,
+            );
             navigation.navigate(...createRestoreWalletNavDetails());
           } catch (e) {
-            console.log(
-              'vault/ Login Authentication.storePassword failed with the following error',
+            Logger.log(
+              'Login handleVaultCorruption',
+              'Login Authentication.storePassword failed with the following error',
               e,
             );
           }
         } else {
-          // current password does not can't unlock the vault
+          // current password does not unlock the vault
           this.setState({
             loading: false,
             error: strings('login.invalid_password'),
           });
-          console.log('Vault/ Login: Invalid Password');
         }
       } catch (error) {
-        // current password does not can't unlock the vault
+        // current password does not unlock the vault
         this.setState({
           loading: false,
           error: strings('login.invalid_password'),
         });
-        console.log('Vault/ Login: Invalid Password', error);
       }
     } else {
-      console.log('vault/ no vault or password');
+      // no password
+      this.setState({
+        loading: false,
+        error: strings('login.invalid_password'),
+      });
     }
   };
 

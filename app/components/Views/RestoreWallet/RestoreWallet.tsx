@@ -15,7 +15,6 @@ import { useNavigation } from '@react-navigation/native';
 import { createWalletRestoredNavDetails } from './WalletRestored';
 import { useAppThemeFromContext } from '../../../util/theme';
 import { createWalletResetNeededNavDetails } from './WalletResetNeeded';
-import Logger from '../../..//util/Logger';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const onboardingDeviceImage = require('../../../images/swaps_onboard_device.png');
@@ -33,14 +32,11 @@ const RestoreWallet = () => {
   const { navigate } = useNavigation();
 
   const handleOnNext = useCallback(async () => {
-    console.log('vault/ handleNext');
     setLoading(true);
     const restoreResult = await EngineService.initializeVaultFromBackup();
     if (restoreResult.success) {
-      console.log('vault/ restore successful. Navigating to Wallet restored');
       navigate(...createWalletRestoredNavDetails());
     } else {
-      console.log('vault/ error with restore', restoreResult);
       navigate(...createWalletResetNeededNavDetails());
     }
   }, [navigate]);

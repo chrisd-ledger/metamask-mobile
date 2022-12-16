@@ -38,35 +38,17 @@ const WalletRestored = () => {
   const { colors } = useAppThemeFromContext();
 
   const finishWalletRestore = useCallback(async () => {
-    const credentials = await Authentication.getPassword();
-    if (credentials) {
-      console.log('vault/ WalletRestored credentials', credentials);
-      try {
-        const authData = await Authentication.getType();
-        await Authentication.userEntryAuth(
-          credentials.password,
-          authData,
-          selectedAddress,
-        );
-        // Only way to land back on Login is to log out, which clears credentials (meaning we should not show biometric button)
-        console.log('vault/ WalletRestored login');
-        navigation.navigate(Routes.ONBOARDING.HOME_NAV);
-      } catch (error) {
-        console.log('vault/ WalletRestored not logged in', error);
-        Authentication.lockApp(false);
-        navigation.navigate(Routes.ONBOARDING.LOGIN);
-      }
-    } else {
-      // they were using password as their login method
-      console.log('vault/ WalletRestored no credentials');
-      Authentication.lockApp(false);
+    try {
+      await Authentication.appTriggeredAuth(selectedAddress);
+      navigation.navigate(Routes.ONBOARDING.HOME_NAV);
+    } catch (e) {
+      // we were not able to log in automatically so we will go back to login
       navigation.navigate(Routes.ONBOARDING.LOGIN);
     }
   }, [navigation, selectedAddress]);
 
   const handleOnNext = useCallback(async () => {
     setLoading(true);
-    console.log('vault/ wallet restored handleOnNext pressed');
     await finishWalletRestore();
   }, [finishWalletRestore]);
 

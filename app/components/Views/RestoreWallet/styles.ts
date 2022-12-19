@@ -20,7 +20,6 @@ export const createStyles = () =>
     },
     emoji: {
       padding: 16,
-      lineHeight: 80,
       fontSize: 64,
     },
     title: {

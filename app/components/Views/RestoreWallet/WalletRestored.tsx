@@ -1,6 +1,11 @@
 /* eslint-disable import/no-commonjs */
 import React, { useCallback, useState } from 'react';
-import { View, ActivityIndicator, ScrollView } from 'react-native';
+import {
+  View,
+  ActivityIndicator,
+  ScrollView,
+  Text as RNText,
+} from 'react-native';
 import { strings } from '../../../../locales/i18n';
 import { createStyles } from './styles';
 import Text, {
@@ -47,9 +52,7 @@ const WalletRestored = () => {
   return (
     <SafeAreaView style={styles.screen}>
       <ScrollView contentContainerStyle={styles.content}>
-        <Text adjustsFontSizeToFit style={styles.emoji}>
-          🎉
-        </Text>
+        <RNText style={styles.emoji}>🎉</RNText>
         <Text variant={TextVariants.lHeadingLG} style={styles.title}>
           {strings('wallet_restored.wallet_restored_title')}
         </Text>

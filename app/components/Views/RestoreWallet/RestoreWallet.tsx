@@ -24,9 +24,9 @@ export const createRestoreWalletNavDetails = createNavigationDetails(
 );
 
 const RestoreWallet = () => {
-  const styles = createStyles();
-
   const { colors } = useAppThemeFromContext();
+  const styles = createStyles(colors);
+
   const [loading, setLoading] = useState<boolean>(false);
 
   const { navigate } = useNavigation();

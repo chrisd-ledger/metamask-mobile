@@ -5,6 +5,7 @@ import {
   ActivityIndicator,
   ScrollView,
   Text as RNText,
+  Linking,
 } from 'react-native';
 import { strings } from '../../../../locales/i18n';
 import { createStyles } from './styles';
@@ -26,13 +27,13 @@ export const createWalletRestoredNavDetails = createNavigationDetails(
 
 const WalletRestored = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const styles = createStyles();
+  const { colors } = useAppThemeFromContext();
+  const styles = createStyles(colors);
   const navigation = useNavigation();
   const selectedAddress = useSelector(
     (state: any) =>
       state.engine.backgroundState.PreferencesController.selectedAddress,
   );
-  const { colors } = useAppThemeFromContext();
 
   const finishWalletRestore = useCallback(async () => {
     try {
@@ -43,6 +44,13 @@ const WalletRestored = () => {
       navigation.navigate(Routes.ONBOARDING.LOGIN);
     }
   }, [navigation, selectedAddress]);
+
+  const backupSRPURL =
+    'https://metamask.zendesk.com/hc/en-us/articles/360060826432-What-is-a-Secret-Recovery-Phrase-and-how-to-keep-your-crypto-wallet-secure';
+
+  const onPressBackupSRP = useCallback(async () => {
+    Linking.openURL(backupSRPURL);
+  }, []);
 
   const handleOnNext = useCallback(async () => {
     setLoading(true);
@@ -56,8 +64,20 @@ const WalletRestored = () => {
         <Text variant={TextVariants.lHeadingLG} style={styles.title}>
           {strings('wallet_restored.wallet_restored_title')}
         </Text>
-        <Text variant={TextVariants.sBodyMD} style={styles.description}>
-          {strings('wallet_restored.wallet_restored_description')}
+        <Text style={styles.description}>
+          <Text variant={TextVariants.sBodyMD}>
+            {strings('wallet_restored.wallet_restored_description_part_one')}
+          </Text>
+          <Text
+            variant={TextVariants.sBodyMD}
+            style={styles.blueText}
+            onPress={onPressBackupSRP}
+          >
+            {strings('wallet_restored.wallet_restored_description_link')}
+          </Text>
+          <Text variant={TextVariants.sBodyMD}>
+            {strings('wallet_restored.wallet_restored_description_part_two')}
+          </Text>
         </Text>
         <Text variant={TextVariants.sBodyMD} style={styles.description}>
           {strings('wallet_restored.wallet_restored_manual_backup')}

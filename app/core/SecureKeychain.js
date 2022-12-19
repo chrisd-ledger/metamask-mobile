@@ -75,7 +75,6 @@ export default {
   },
 
   async resetGenericPassword() {
-    console.log('vault/ resetGenericPassword called');
     const options = { service: defaultOptions.service };
     await AsyncStorage.removeItem(BIOMETRY_CHOICE);
     await AsyncStorage.removeItem(PASSCODE_CHOICE);
@@ -86,12 +85,9 @@ export default {
 
   async getGenericPassword() {
     if (instance) {
-      console.log('vault/ SecureKeychain getGenericPassword');
       instance.isAuthenticating = true;
       const keychainObject = await Keychain.getGenericPassword(defaultOptions);
-      console.log('vault/ Keychain.getGenericPassword', { keychainObject });
       if (keychainObject.password) {
-        console.log('vault/ keychainObject.password exists');
         const encryptedPassword = keychainObject.password;
         const decrypted = await instance.decryptPassword(encryptedPassword);
         keychainObject.password = decrypted.password;
@@ -100,17 +96,10 @@ export default {
       }
       instance.isAuthenticating = false;
     }
-    console.log('vault/ SecureKeychain getGenericPassword no instance');
     return null;
   },
 
   async setGenericPassword(password, type) {
-    console.log(
-      'vault/ setGenericPassword called with password,',
-      password,
-      'and type',
-      type,
-    );
     const authOptions = {
       accessible: Keychain.ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY,
     };

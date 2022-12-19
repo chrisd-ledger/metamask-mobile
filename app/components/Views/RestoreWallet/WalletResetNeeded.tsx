@@ -22,8 +22,8 @@ export const createWalletResetNeededNavDetails = createNavigationDetails(
 );
 
 const WalletResetNeeded = () => {
-  const styles = createStyles();
   const { colors } = useAppThemeFromContext();
+  const styles = createStyles(colors);
 
   const [loading, setLoading] = useState<boolean>(false);
   const handleOnNext = useCallback(async () => {

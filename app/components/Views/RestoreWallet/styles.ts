@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import { StyleSheet } from 'react-native';
 
-export const createStyles = () =>
+export const createStyles = (colors) =>
   StyleSheet.create({
     screen: {
       flex: 1,
@@ -35,5 +35,8 @@ export const createStyles = () =>
     },
     actionButton: {
       marginVertical: 10,
+    },
+    blueText: {
+      color: colors.primary.default,
     },
   });

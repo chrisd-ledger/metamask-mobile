@@ -36,6 +36,7 @@ const RestoreWallet = () => {
     const restoreResult = await EngineService.initializeVaultFromBackup();
     if (restoreResult.success) {
       navigate(...createWalletRestoredNavDetails());
+      // navigate(...createWalletResetNeededNavDetails());
     } else {
       navigate(...createWalletResetNeededNavDetails());
     }
@@ -46,13 +47,13 @@ const RestoreWallet = () => {
       <View style={styles.content}>
         <View style={styles.images}>
           <Image source={onboardingDeviceImage} />
-          <Text variant={TextVariants.lHeadingLG}>
-            {strings('restore_wallet.restore_needed_title')}
-          </Text>
-          <Text variant={TextVariants.sBodyMD} style={styles.description}>
-            {strings('restore_wallet.restore_needed_description')}
-          </Text>
         </View>
+        <Text variant={TextVariants.lHeadingLG} style={styles.title}>
+          {strings('restore_wallet.restore_needed_title')}
+        </Text>
+        <Text variant={TextVariants.sBodyMD} style={styles.description}>
+          {strings('restore_wallet.restore_needed_description')}
+        </Text>
       </View>
       <View style={styles.actionButtonWrapper}>
         <StyledButton

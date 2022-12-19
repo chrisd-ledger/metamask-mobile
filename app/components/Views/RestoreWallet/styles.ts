@@ -5,20 +5,31 @@ export const createStyles = () =>
   StyleSheet.create({
     screen: {
       flex: 1,
-      paddingHorizontal: 25,
+      paddingHorizontal: 24,
       justifyContent: 'space-between',
       alignItems: 'center',
     },
     content: {
       flex: 1,
       justifyContent: 'center',
-      marginVertical: 14,
+      alignItems: 'center',
     },
     images: {
       alignItems: 'center',
+      padding: 16,
+    },
+    emoji: {
+      padding: 16,
+      lineHeight: 80,
+      fontSize: 64,
+    },
+    title: {
+      textAlign: 'center',
+      paddingBottom: 16,
     },
     description: {
       textAlign: 'center',
+      padding: 8,
     },
     actionButtonWrapper: {
       width: '100%',

@@ -52,7 +52,6 @@ import generateTestId from '../../../../wdio/utils/generateTestId';
 import { createRestoreWalletNavDetails } from '../RestoreWallet/RestoreWallet';
 import { parseVaultValue } from '../../../util/validators';
 import { getVaultFromBackup } from '../../../core/backupVault';
-import SecureKeychain from '../../../core/SecureKeychain';
 
 const deviceHeight = Device.getDeviceHeight();
 const breakPoint = deviceHeight < 700;
@@ -294,9 +293,9 @@ class Login extends PureComponent {
   };
 
   handleVaultCorruption = async (error) => {
+    const { navigation } = this.props;
     console.log('vault/ vault error thrown: ', error);
     // navigate to recovery flow
-    const { navigation } = this.props;
 
     const keyringState = await getVaultFromBackup();
 

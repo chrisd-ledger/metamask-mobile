@@ -1,11 +1,6 @@
 /* eslint-disable import/no-commonjs */
 import React, { useCallback, useState } from 'react';
-import {
-  View,
-  Image,
-  ActivityIndicator,
-  InteractionManager,
-} from 'react-native';
+import { View, ActivityIndicator, ScrollView } from 'react-native';
 import { strings } from '../../../../locales/i18n';
 import { createStyles } from './styles';
 import Text, {
@@ -19,9 +14,6 @@ import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { Authentication } from '../../../core';
 import { useAppThemeFromContext } from '../../../util/theme';
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const onboardingDeviceImage = require('../../../images/swaps_onboard_device.png');
 
 export const createWalletRestoredNavDetails = createNavigationDetails(
   Routes.VAULT_RECOVERY.WALLET_RESTORED,
@@ -54,20 +46,20 @@ const WalletRestored = () => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <View style={styles.content}>
-        <View style={styles.images}>
-          <Image source={onboardingDeviceImage} />
-          <Text variant={TextVariants.lHeadingLG}>
-            {strings('wallet_restored.wallet_restored_title')}
-          </Text>
-          <Text variant={TextVariants.sBodyMD} style={styles.description}>
-            {strings('wallet_restored.wallet_restored_description')}
-          </Text>
-          <Text variant={TextVariants.sBodyMD} style={styles.description}>
-            {strings('wallet_restored.wallet_restored_manual_backup')}
-          </Text>
-        </View>
-      </View>
+      <ScrollView contentContainerStyle={styles.content}>
+        <Text adjustsFontSizeToFit style={styles.emoji}>
+          🎉
+        </Text>
+        <Text variant={TextVariants.lHeadingLG} style={styles.title}>
+          {strings('wallet_restored.wallet_restored_title')}
+        </Text>
+        <Text variant={TextVariants.sBodyMD} style={styles.description}>
+          {strings('wallet_restored.wallet_restored_description')}
+        </Text>
+        <Text variant={TextVariants.sBodyMD} style={styles.description}>
+          {strings('wallet_restored.wallet_restored_manual_backup')}
+        </Text>
+      </ScrollView>
       <View style={styles.actionButtonWrapper}>
         <StyledButton
           type="confirm"

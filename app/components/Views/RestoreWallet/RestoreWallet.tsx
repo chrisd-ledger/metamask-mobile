@@ -16,7 +16,7 @@ import { createWalletRestoredNavDetails } from './WalletRestored';
 import { useAppThemeFromContext } from '../../../util/theme';
 import { createWalletResetNeededNavDetails } from './WalletResetNeeded';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+/* eslint-disable import/no-commonjs, @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports */
 const onboardingDeviceImage = require('../../../images/swaps_onboard_device.png');
 
 export const createRestoreWalletNavDetails = createNavigationDetails(
@@ -35,8 +35,7 @@ const RestoreWallet = () => {
     setLoading(true);
     const restoreResult = await EngineService.initializeVaultFromBackup();
     if (restoreResult.success) {
-      // navigate(...createWalletRestoredNavDetails());
-      navigate(...createWalletResetNeededNavDetails());
+      navigate(...createWalletRestoredNavDetails());
     } else {
       navigate(...createWalletResetNeededNavDetails());
     }

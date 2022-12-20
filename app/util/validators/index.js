@@ -32,7 +32,6 @@ export const parseVaultValue = async (password, vault) => {
     } catch (error) {
       //No-op
     }
-  console.log(vaultSeed);
   return vaultSeed;
 };
 

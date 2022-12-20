@@ -118,7 +118,7 @@ const persistConfig = {
   stateReconciler: autoMergeLevel2, // see "Merge Process" section for details.
   migrate: createMigrate(migrations, { debug: false }),
   timeout: TIMEOUT,
-  writeFailHandler: async (error) => {
+  writeFailHandler: (error) => {
     Logger.error(error, { message: 'Error persisting data' }); // Log error if saving state fails
   },
 };
@@ -131,7 +131,6 @@ export const store = createStore(pReducer);
  * Initialize services after persist is completed
  */
 const onPersistComplete = () => {
-  console.log('onPersistComplete');
   EngineService.initalizeEngine(store);
   Authentication.init(store);
 };

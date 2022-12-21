@@ -47,7 +47,6 @@ const MigratedStorage = {
     } catch (error) {
       Logger.error(error, { message: 'Failed to set item' });
     }
-    // throw new Error('Failed async storage storage fetch.');
   },
   async removeItem(key) {
     try {

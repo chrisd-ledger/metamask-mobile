@@ -245,10 +245,10 @@ class Engine {
 
       const additionalKeyrings = [QRHardwareKeyring];
 
-      const keyRingState =
+      const keyringState =
         initialKeyringState || initialState.KeyringController;
 
-      const newKeyRingController = new KeyringController(
+      const newKeyringController = new KeyringController(
         {
           removeIdentity: preferencesController.removeIdentity.bind(
             preferencesController,
@@ -267,11 +267,11 @@ class Engine {
           ),
         },
         { encryptor, keyringTypes: additionalKeyrings },
-        keyRingState,
+        keyringState,
       );
 
       const controllers = [
-        newKeyRingController,
+        newKeyringController,
         new AccountTrackerController({
           onPreferencesStateChange: (listener) =>
             preferencesController.subscribe(listener),

@@ -297,14 +297,11 @@ class Login extends PureComponent {
     console.log('vault/ vault error thrown: ', error);
     // navigate to recovery flow
 
-    const keyringState = await getVaultFromBackup();
+    const { vault } = await getVaultFromBackup();
 
-    if (keyringState.vault && this.state.password) {
+    if (vault && this.state.password) {
       try {
-        const vaultSeed = await parseVaultValue(
-          this.state.password,
-          keyringState.vault.toString(),
-        );
+        const vaultSeed = await parseVaultValue(this.state.password, vault);
         if (vaultSeed) {
           // get authType
           const authData = await Authentication.componentAuthenticationType(

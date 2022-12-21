@@ -11,6 +11,9 @@ interface InitializeEngineResult {
   error?: string;
 }
 
+const VAULT_CREATION_ERROR = 'Error creating the vault';
+const NO_VAULT_IN_BACKUP_ERROR = 'No vault in backup';
+
 class EngineService {
   private engineInitialized = false;
 
@@ -90,19 +93,18 @@ class EngineService {
   };
 
   /**
-   * Initializer for the EngineService
+   * Initialize the engine with a backup vault from the Secure KeyChain
    *
-   * @param store - Redux store
    */
   async initializeVaultFromBackup(): Promise<InitializeEngineResult> {
-    const keyringState = await getVaultFromBackup();
+    const { vault } = await getVaultFromBackup();
     const reduxState = importedStore.getState?.();
     const state = reduxState?.engine?.backgroundState || {};
     const Engine = UntypedEngine as any;
     // This ensures we create an entirely new engine
     Engine.destroyEngine();
-    if (keyringState) {
-      const instance = Engine.init(state, keyringState);
+    if (vault) {
+      const instance = Engine.init(state, vault);
       if (instance) {
         this.updateControllers(importedStore, instance);
         return {
@@ -111,12 +113,12 @@ class EngineService {
       }
       return {
         success: false,
-        error: 'Error creating the vault',
+        error: VAULT_CREATION_ERROR,
       };
     }
     return {
       success: false,
-      error: 'No vault in backup',
+      error: NO_VAULT_IN_BACKUP_ERROR,
     };
   }
 }

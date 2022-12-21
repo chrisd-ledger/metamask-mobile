@@ -14,13 +14,20 @@ const options: Options = {
   accessible: ACCESSIBLE.WHEN_UNLOCKED,
 };
 
-interface KeyRingBackupResponse {
+interface KeyringBackupResponse {
   success: boolean;
   message: string;
   state?: KeyringState;
 }
 
-export const backupVault = async (keyringState: KeyringState) => {
+interface FetchKeyringFromBackupResponse {
+  success: boolean;
+  vault?: string;
+}
+
+export async function backupVault(
+  keyringState: KeyringState,
+): Promise<KeyringBackupResponse> {
   if (keyringState.vault) {
     const backupResult = await setInternetCredentials(
       VAULT_BACKUP_KEY,
@@ -30,14 +37,14 @@ export const backupVault = async (keyringState: KeyringState) => {
     );
     if (backupResult === false) {
       Logger.log(VAULT_BACKUP_KEY, 'Vault backup failed');
-      const response: KeyRingBackupResponse = {
+      const response: KeyringBackupResponse = {
         success: false,
         message: 'Vault backup failed',
       };
       return response;
     }
     Logger.log(VAULT_BACKUP_KEY, 'Vault successfully backed up');
-    const response: KeyRingBackupResponse = {
+    const response: KeyringBackupResponse = {
       success: true,
       message: 'Vault successfully backed up',
       state: {
@@ -48,21 +55,21 @@ export const backupVault = async (keyringState: KeyringState) => {
     return response;
   }
   Logger.log(VAULT_BACKUP_KEY, 'Unable to backup vault as it is undefined');
-  const response: KeyRingBackupResponse = {
+  const response: KeyringBackupResponse = {
     success: false,
     message: 'Unable to backup vault as it is undefined',
   };
   return response;
-};
+}
 
-export const getVaultFromBackup = async () => {
+export async function getVaultFromBackup(): Promise<FetchKeyringFromBackupResponse> {
   Logger.log(VAULT_BACKUP_KEY, 'getVaultFromBackup');
   const credentials = await getInternetCredentials(VAULT_BACKUP_KEY);
   if (credentials) {
-    return { vault: credentials.password };
+    return { success: true, vault: credentials.password };
   }
-  return false;
-};
+  return { success: false };
+}
 
 export const resetVaultBackup = async () => {
   Logger.log(VAULT_BACKUP_KEY, 'resetting vault backup');

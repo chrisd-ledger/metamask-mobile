@@ -68,6 +68,9 @@ const WalletRestored = () => {
           <Text variant={TextVariants.sBodyMD}>
             {strings('wallet_restored.wallet_restored_description_part_one')}
           </Text>
+          <Text variant={TextVariants.sBodyMD} style={styles.description}>
+            {strings('wallet_restored.wallet_restored_description_part_two')}
+          </Text>
           <Text
             variant={TextVariants.sBodyMD}
             style={styles.blueText}
@@ -76,11 +79,8 @@ const WalletRestored = () => {
             {strings('wallet_restored.wallet_restored_description_link')}
           </Text>
           <Text variant={TextVariants.sBodyMD}>
-            {strings('wallet_restored.wallet_restored_description_part_two')}
+            {strings('wallet_restored.wallet_restored_description_part_three')}
           </Text>
-        </Text>
-        <Text variant={TextVariants.sBodyMD} style={styles.description}>
-          {strings('wallet_restored.wallet_restored_manual_backup')}
         </Text>
       </ScrollView>
       <View style={styles.actionButtonWrapper}>

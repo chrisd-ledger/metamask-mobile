@@ -79,37 +79,44 @@ const WalletResetNeeded = () => {
           />
         </View>
         <Text variant={TextVariants.lHeadingLG} style={styles.title}>
-          {strings('wallet_reset_needed.wallet_reset_needed_title')}
+          {strings('new_wallet_needed.new_wallet_needed_title')}
         </Text>
         <Text variant={TextVariants.sBodyMD} style={styles.description}>
-          {strings('wallet_reset_needed.wallet_reset_needed_caption')}
+          {strings('new_wallet_needed.new_wallet_needed_description_part_one')}
         </Text>
         <Text variant={TextVariants.sBodyMD} style={styles.description}>
-          {strings('wallet_reset_needed.wallet_reset_needed_description')}
+          {strings('new_wallet_needed.wew_wallet_needed_description_part_two')}
+        </Text>
+        <Text variant={TextVariants.sBodyMD} style={styles.description}>
+          {strings(
+            'new_wallet_needed.wew_wallet_needed_description_part_three',
+          )}
         </Text>
       </ScrollView>
       <View style={styles.actionButtonWrapper}>
         <StyledButton
           type="confirm"
           containerStyle={styles.actionButton}
-          onPress={handleImportWallet}
+          onPress={handleCreateNewWallet}
         >
-          {importWalletLoading ? (
+          {createNewWalletLoading ? (
             <ActivityIndicator size="small" color={colors.primary.inverse} />
           ) : (
-            strings('wallet_reset_needed.wallet_reset_needed_reset_action')
+            strings(
+              'new_wallet_needed.new_wallet_needed_create_try_again_action',
+            )
           )}
         </StyledButton>
         <StyledButton
           type="normal"
           containerStyle={styles.actionButton}
-          onPress={handleCreateNewWallet}
+          onPress={handleImportWallet}
         >
-          {createNewWalletLoading ? (
+          {importWalletLoading ? (
             <ActivityIndicator size="small" color={colors.primary.default} />
           ) : (
             strings(
-              'wallet_reset_needed.wallet_reset_needed_create_new_wallet_action',
+              'new_wallet_needed.new_wallet_needed_create_new_wallet_action',
             )
           )}
         </StyledButton>

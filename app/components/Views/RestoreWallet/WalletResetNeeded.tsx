@@ -85,11 +85,11 @@ const WalletResetNeeded = () => {
           {strings('new_wallet_needed.new_wallet_needed_description_part_one')}
         </Text>
         <Text variant={TextVariants.sBodyMD} style={styles.description}>
-          {strings('new_wallet_needed.wew_wallet_needed_description_part_two')}
+          {strings('new_wallet_needed.new_wallet_needed_description_part_two')}
         </Text>
         <Text variant={TextVariants.sBodyMD} style={styles.description}>
           {strings(
-            'new_wallet_needed.wew_wallet_needed_description_part_three',
+            'new_wallet_needed.new_wallet_needed_description_part_three',
           )}
         </Text>
       </ScrollView>

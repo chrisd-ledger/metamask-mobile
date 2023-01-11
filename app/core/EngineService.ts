@@ -33,6 +33,7 @@ class EngineService {
   };
 
   private updateControllers = (store: any, engine: any) => {
+    console.log('vault/', 'updateControllers started');
     const controllers = [
       { name: 'AccountTrackerController' },
       { name: 'AddressBookController' },
@@ -90,6 +91,7 @@ class EngineService {
           update_bg_state_cb,
         );
     });
+    console.log('vault/', 'updateControllers ended');
   };
 
   /**
@@ -102,7 +104,7 @@ class EngineService {
     const state = reduxState?.engine?.backgroundState || {};
     const Engine = UntypedEngine as any;
     // This ensures we create an entirely new engine
-    Engine.destroyEngine();
+    await Engine.destroyEngine();
     if (vault) {
       const instance = Engine.init(state, vault);
       if (instance) {

@@ -80,6 +80,11 @@ class Engine {
    */
   constructor(initialState = {}, initialKeyringState) {
     if (!Engine.instance) {
+      console.log(
+        'vault/',
+        'Engine init started with params:',
+        initialKeyringState,
+      );
       this.controllerMessenger = new ControllerMessenger();
       const preferencesController = new PreferencesController(
         {},
@@ -460,6 +465,8 @@ class Engine {
       this.startPolling();
       this.handleVaultBackup();
       Engine.instance = this;
+
+      console.log('vault/', 'Engine init finished');
     }
 
     return Engine.instance;
@@ -829,10 +836,12 @@ class Engine {
     this.controllerMessenger.clearSubscriptions();
   }
 
-  destroyEngineInstance() {
+  async destroyEngineInstance() {
+    console.log('vault/', 'Engine destroyEngineInstance started');
     this.removeAllListeners();
-    this.resetState();
+    await this.resetState();
     Engine.instance = null;
+    console.log('vault/', 'Engine destroyEngineInstance ended');
   }
 }
 

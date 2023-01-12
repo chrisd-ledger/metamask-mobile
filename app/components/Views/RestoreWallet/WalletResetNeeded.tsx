@@ -1,6 +1,5 @@
-/* eslint-disable import/no-commonjs */
-import React, { useCallback, useState } from 'react';
-import { View, ActivityIndicator, ScrollView } from 'react-native';
+import React, { useCallback } from 'react';
+import { View, ScrollView } from 'react-native';
 import { strings } from '../../../../locales/i18n';
 import { createStyles } from './styles';
 import Text, {
@@ -15,9 +14,9 @@ import Icon, {
   IconName,
   IconSize,
 } from '../../../component-library/components/Icon';
-import { useDeleteWallet } from '../../hooks/DeleteWallet';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { createRestoreWalletNavDetails } from './RestoreWallet';
 
 export const createWalletResetNeededNavDetails = createNavigationDetails(
   Routes.VAULT_RECOVERY.WALLET_RESET_NEEDED,
@@ -26,37 +25,18 @@ export const createWalletResetNeededNavDetails = createNavigationDetails(
 const WalletResetNeeded = () => {
   const { colors } = useAppThemeFromContext();
   const styles = createStyles(colors);
-  const [resetWalletState] = useDeleteWallet();
-  const [importWalletLoading, setImportWalletLoading] =
-    useState<boolean>(false);
-  const [createNewWalletLoading, setCreateNewWalletLoading] =
-    useState<boolean>(false);
 
   const navigation = useNavigation<StackNavigationProp<any>>();
 
   const handleCreateNewWallet = useCallback(async () => {
-    setCreateNewWalletLoading(true);
-    try {
-      await resetWalletState();
-      // this does not work and we need to figure out what to do here
-      // navigation.navigate(Routes.ONBOARDING.IMPORT_FROM_SECRET_RECOVERY_PHRASE);
-    } catch (error) {
-      // TODO how should we handle this case?
-      setCreateNewWalletLoading(false);
-    }
-  }, [resetWalletState]);
+    navigation.navigate(Routes.MODAL.ROOT_MODAL_FLOW, {
+      screen: Routes.MODAL.DELETE_WALLET,
+    });
+  }, [navigation]);
 
-  const handleImportWallet = useCallback(async () => {
-    setImportWalletLoading(true);
-    try {
-      await resetWalletState();
-      // this does not work and we need to figure out what to do here
-      // navigation.navigate(Routes.ONBOARDING.IMPORT_FROM_SECRET_RECOVERY_PHRASE);
-    } catch (error) {
-      // TODO how should we handle this case?
-      setCreateNewWalletLoading(false);
-    }
-  }, [resetWalletState]);
+  const handleTryAgain = useCallback(async () => {
+    navigation.replace(...createRestoreWalletNavDetails());
+  }, [navigation]);
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -87,27 +67,19 @@ const WalletResetNeeded = () => {
         <StyledButton
           type="confirm"
           containerStyle={styles.actionButton}
-          onPress={handleCreateNewWallet}
+          onPress={handleTryAgain}
         >
-          {createNewWalletLoading ? (
-            <ActivityIndicator size="small" color={colors.primary.inverse} />
-          ) : (
-            strings(
-              'new_wallet_needed.new_wallet_needed_create_try_again_action',
-            )
+          {strings(
+            'new_wallet_needed.new_wallet_needed_create_try_again_action',
           )}
         </StyledButton>
         <StyledButton
           type="normal"
           containerStyle={styles.actionButton}
-          onPress={handleImportWallet}
+          onPress={handleCreateNewWallet}
         >
-          {importWalletLoading ? (
-            <ActivityIndicator size="small" color={colors.primary.default} />
-          ) : (
-            strings(
-              'new_wallet_needed.new_wallet_needed_create_new_wallet_action',
-            )
+          {strings(
+            'new_wallet_needed.new_wallet_needed_create_new_wallet_action',
           )}
         </StyledButton>
       </View>

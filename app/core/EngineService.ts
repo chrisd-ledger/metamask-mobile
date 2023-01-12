@@ -33,7 +33,6 @@ class EngineService {
   };
 
   private updateControllers = (store: any, engine: any) => {
-    console.log('vault/', 'updateControllers started');
     const controllers = [
       { name: 'AccountTrackerController' },
       { name: 'AddressBookController' },
@@ -91,7 +90,6 @@ class EngineService {
           update_bg_state_cb,
         );
     });
-    console.log('vault/', 'updateControllers ended');
   };
 
   /**
@@ -109,6 +107,8 @@ class EngineService {
       const instance = Engine.init(state, keyringState);
       if (instance) {
         this.updateControllers(importedStore, instance);
+        // this is a hack to give the engine time to reinitialize
+        await new Promise((resolve) => setTimeout(resolve, 2000));
         return {
           success: true,
         };

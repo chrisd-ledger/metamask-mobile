@@ -52,7 +52,6 @@ import generateTestId from '../../../../wdio/utils/generateTestId';
 import { createRestoreWalletNavDetails } from '../RestoreWallet/RestoreWallet';
 import { parseVaultValue } from '../../../util/validators';
 import { getVaultFromBackup } from '../../../core/backupVault';
-import Engine from '../../../core/Engine';
 
 const deviceHeight = Device.getDeviceHeight();
 const breakPoint = deviceHeight < 700;
@@ -295,7 +294,6 @@ class Login extends PureComponent {
 
   handleVaultCorruption = async (error) => {
     const { navigation } = this.props;
-    console.log('vault/ vault error thrown: ', error);
     // navigate to recovery flow
 
     const { vault } = await getVaultFromBackup();
@@ -316,10 +314,6 @@ class Login extends PureComponent {
             await Authentication.storePassword(
               this.state.password,
               authData.type,
-            );
-            console.log(
-              'vault/',
-              'login navigate to createRestoreWalletNavDetails',
             );
             navigation.navigate(...createRestoreWalletNavDetails());
           } catch (e) {
@@ -365,8 +359,6 @@ class Login extends PureComponent {
       this.state.rememberMe,
     );
 
-    console.log('vault/', Engine.context.KeyringController);
-
     try {
       await Authentication.userEntryAuth(
         password,
@@ -390,7 +382,6 @@ class Login extends PureComponent {
       });
       field.setValue('');
     } catch (e) {
-      console.log('vault/', 'login error:', e);
       const error = e.toString();
       if (
         toLowerCaseEquals(error, WRONG_PASSWORD_ERROR) ||
@@ -418,7 +409,6 @@ class Login extends PureComponent {
           error: strings('login.clean_vault_error'),
         });
       } else {
-        console.log('vault/ failed to enter catch block with error:', error);
         this.setState({ loading: false, error });
       }
       Logger.error(error, 'Failed to unlock');
@@ -426,7 +416,6 @@ class Login extends PureComponent {
   };
 
   tempBreakTheVault = async () => {
-    console.log('vault/ tempBreakTheVault');
     await this.handleVaultCorruption();
   };
 

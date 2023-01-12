@@ -76,9 +76,7 @@ class AuthenticationService {
   ): Promise<void> => {
     // Restore vault with user entered password
     const { KeyringController }: any = Engine.context;
-    console.log('vault/', 'loginVaultCreation before submitPassword');
     await KeyringController.submitPassword(password);
-    console.log('vault/', 'loginVaultCreation after submitPassword');
     const encryptionLib = await AsyncStorage.getItem(ENCRYPTION_LIB);
     const existingUser = await AsyncStorage.getItem(EXISTING_USER);
     if (encryptionLib !== ORIGINAL && existingUser) {

@@ -43,11 +43,6 @@ const WalletResetNeeded = () => {
     } catch (error) {
       // TODO how should we handle this case?
       setCreateNewWalletLoading(false);
-      console.log(
-        'WalletResetNeeded',
-        'there was an issue resetting the wallet',
-        error,
-      );
     }
   }, [resetWalletState]);
 
@@ -60,11 +55,6 @@ const WalletResetNeeded = () => {
     } catch (error) {
       // TODO how should we handle this case?
       setCreateNewWalletLoading(false);
-      console.log(
-        'WalletResetNeeded',
-        'there was an issue resetting the wallet',
-        error,
-      );
     }
   }, [resetWalletState]);
 

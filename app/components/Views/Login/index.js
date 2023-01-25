@@ -244,7 +244,7 @@ class Login extends PureComponent {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
 
     //Setup UI to handle Biometric
-    const { type } = await Authentication.getType();
+    const { type } = await Authentication.getAuthData();
     const previouslyDisabled = await AsyncStorage.getItem(
       BIOMETRY_CHOICE_DISABLED,
     );

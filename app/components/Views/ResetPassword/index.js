@@ -336,6 +336,7 @@ class ResetPassword extends PureComponent {
 
     const state = { view: CONFIRM_PASSWORD };
 
+    console.log('vault/ ResetPassword calling Authentication.getType');
     const authType = await Authentication.getType();
     const previouslyDisabled = await AsyncStorage.getItem(
       BIOMETRY_CHOICE_DISABLED,

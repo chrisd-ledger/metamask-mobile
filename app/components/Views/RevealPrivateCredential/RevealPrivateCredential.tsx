@@ -160,6 +160,7 @@ const RevealPrivateCredential = ({
 
     const unlockWithBiometrics = async () => {
       // Try to use biometrics to unlock
+      console.log('vault/ reveal private creds calling Authentication.getType');
       const { biometryType } = await Authentication.getType();
       if (!passwordSet) {
         tryUnlockWithPassword('');

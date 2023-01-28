@@ -9,6 +9,12 @@ import {
   LOGIN_WITH_REMEMBER_ME_SWITCH,
 } from '../../../constants/test-ids';
 import { useSelector } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+  BIOMETRY_CHOICE_DISABLED,
+  PASSCODE_DISABLED,
+  TRUE,
+} from '../../../constants/storage';
 
 interface Props {
   shouldRenderBiometricOption: BIOMETRY_TYPE | null;
@@ -35,8 +41,20 @@ const LoginOptionsSwitch = ({
     (state: any) => state.security.allowLoginWithRememberMe,
   );
   const [rememberMeEnabled, setRememberMeEnabled] = useState<boolean>(false);
+
+  const updateAuthTypeStorageFlags = async (newBiometryChoice: boolean) => {
+    if (!newBiometryChoice) {
+      await AsyncStorage.setItem(BIOMETRY_CHOICE_DISABLED, TRUE);
+      await AsyncStorage.setItem(PASSCODE_DISABLED, TRUE);
+    } else {
+      await AsyncStorage.removeItem(BIOMETRY_CHOICE_DISABLED);
+      await AsyncStorage.removeItem(PASSCODE_DISABLED);
+    }
+  };
+
   const onBiometryValueChanged = useCallback(
     async (newBiometryChoice: boolean) => {
+      updateAuthTypeStorageFlags(newBiometryChoice);
       onUpdateBiometryChoice(newBiometryChoice);
     },
     [onUpdateBiometryChoice],

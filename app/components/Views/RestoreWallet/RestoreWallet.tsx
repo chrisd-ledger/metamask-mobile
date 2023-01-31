@@ -1,5 +1,5 @@
 /* eslint-disable import/no-commonjs */
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { View, Image, ActivityIndicator } from 'react-native';
 import { strings } from '../../../../locales/i18n';
 import { createStyles } from './styles';
@@ -15,6 +15,9 @@ import { useNavigation } from '@react-navigation/native';
 import { createWalletRestoredNavDetails } from './WalletRestored';
 import { useAppThemeFromContext } from '../../../util/theme';
 import { createWalletResetNeededNavDetails } from './WalletResetNeeded';
+import { MetaMetricsEvents } from '../../../core/Analytics';
+import AnalyticsV2 from '../../../util/analyticsV2';
+import generateDeviceAnalyticsMetaData from '../../../util/metrics';
 
 /* eslint-disable import/no-commonjs, @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports */
 const onboardingDeviceImage = require('../../../images/swaps_onboard_device.png');
@@ -31,17 +34,28 @@ const RestoreWallet = () => {
 
   const { navigate } = useNavigation();
 
+  const deviceMetaData = useMemo(() => generateDeviceAnalyticsMetaData(), []);
+
+  useEffect(() => {
+    AnalyticsV2.trackEvent(
+      MetaMetricsEvents.VAULT_CORRUPTION_RESTORE_WALLET_SCREEN_VIEWED,
+      deviceMetaData,
+    );
+  }, [deviceMetaData]);
+
   const handleOnNext = useCallback(async () => {
     setLoading(true);
+    AnalyticsV2.trackEvent(
+      MetaMetricsEvents.VAULT_CORRUPTION_RESTORE_WALLET_BUTTON_PRESSED,
+      deviceMetaData,
+    );
     const restoreResult = await EngineService.initializeVaultFromBackup();
     if (restoreResult.success) {
-      // navigate(...createWalletRestoredNavDetails());
-      // to test the new wallet screen
-      navigate(...createWalletResetNeededNavDetails());
+      navigate(...createWalletRestoredNavDetails());
     } else {
       navigate(...createWalletResetNeededNavDetails());
     }
-  }, [navigate]);
+  }, [deviceMetaData, navigate]);
 
   return (
     <SafeAreaView style={styles.screen}>

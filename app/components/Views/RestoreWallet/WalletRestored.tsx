@@ -1,5 +1,5 @@
 /* eslint-disable import/no-commonjs */
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   View,
   ActivityIndicator,
@@ -20,6 +20,9 @@ import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { Authentication } from '../../../core';
 import { useAppThemeFromContext } from '../../../util/theme';
+import { MetaMetricsEvents } from '../../../core/Analytics';
+import AnalyticsV2 from '../../../util/analyticsV2';
+import generateDeviceAnalyticsMetaData from '../../../util/metrics';
 
 export const createWalletRestoredNavDetails = createNavigationDetails(
   Routes.VAULT_RECOVERY.WALLET_RESTORED,
@@ -34,6 +37,15 @@ const WalletRestored = () => {
     (state: any) =>
       state.engine.backgroundState.PreferencesController.selectedAddress,
   );
+
+  const deviceMetaData = useMemo(() => generateDeviceAnalyticsMetaData(), []);
+
+  useEffect(() => {
+    AnalyticsV2.trackEvent(
+      MetaMetricsEvents.VAULT_CORRUPTION_WALLET_SUCCESSFULLY_RESTORED_SCREEN_VIEWED,
+      deviceMetaData,
+    );
+  }, [deviceMetaData]);
 
   const finishWalletRestore = useCallback(async () => {
     try {
@@ -54,8 +66,12 @@ const WalletRestored = () => {
 
   const handleOnNext = useCallback(async () => {
     setLoading(true);
+    AnalyticsV2.trackEvent(
+      MetaMetricsEvents.VAULT_CORRUPTION_WALLET_SUCCESSFULLY_RESTORED_CONTINUE_BUTTON_PRESSED,
+      deviceMetaData,
+    );
     await finishWalletRestore();
-  }, [finishWalletRestore]);
+  }, [deviceMetaData, finishWalletRestore]);
 
   return (
     <SafeAreaView style={styles.screen}>

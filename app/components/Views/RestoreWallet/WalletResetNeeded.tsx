@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { View, ScrollView } from 'react-native';
 import { strings } from '../../../../locales/i18n';
 import { createStyles } from './styles';
@@ -17,6 +17,9 @@ import Icon, {
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { createRestoreWalletNavDetails } from './RestoreWallet';
+import { MetaMetricsEvents } from '../../../core/Analytics';
+import AnalyticsV2 from '../../../util/analyticsV2';
+import generateDeviceAnalyticsMetaData from '../../../util/metrics';
 
 export const createWalletResetNeededNavDetails = createNavigationDetails(
   Routes.VAULT_RECOVERY.WALLET_RESET_NEEDED,
@@ -28,15 +31,32 @@ const WalletResetNeeded = () => {
 
   const navigation = useNavigation<StackNavigationProp<any>>();
 
+  const deviceMetaData = useMemo(() => generateDeviceAnalyticsMetaData(), []);
+
+  useEffect(() => {
+    AnalyticsV2.trackEvent(
+      MetaMetricsEvents.VAULT_CORRUPTION_WALLET_RESET_NEEDED_SCREEN_VIEWED,
+      deviceMetaData,
+    );
+  }, [deviceMetaData]);
+
   const handleCreateNewWallet = useCallback(async () => {
+    AnalyticsV2.trackEvent(
+      MetaMetricsEvents.VAULT_CORRUPTION_WALLET_RESET_NEEDED_CREATE_NEW_WALLET_BUTTON_PRESSED,
+      deviceMetaData,
+    );
     navigation.navigate(Routes.MODAL.ROOT_MODAL_FLOW, {
       screen: Routes.MODAL.DELETE_WALLET,
     });
-  }, [navigation]);
+  }, [deviceMetaData, navigation]);
 
   const handleTryAgain = useCallback(async () => {
+    AnalyticsV2.trackEvent(
+      MetaMetricsEvents.VAULT_CORRUPTION_WALLET_RESET_NEEDED_TRY_AGAIN_BUTTON_PRESSED,
+      deviceMetaData,
+    );
     navigation.replace(...createRestoreWalletNavDetails());
-  }, [navigation]);
+  }, [deviceMetaData, navigation]);
 
   return (
     <SafeAreaView style={styles.screen}>

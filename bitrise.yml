@@ -476,7 +476,7 @@ app:
       VERSION_NAME: 5.14.2
     - opts:
         is_expand: false
-      VERSION_NUMBER: 1056
+      VERSION_NUMBER: 1057
     - opts:
         is_expand: false
       ANDROID_APK_LINK: ''

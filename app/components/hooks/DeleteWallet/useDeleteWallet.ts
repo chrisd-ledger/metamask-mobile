@@ -3,7 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Logger from '../../../util/Logger';
 import { EXISTING_USER } from '../../../constants/storage';
 import { Authentication } from '../../../core';
-import AUTHENTICATION_TYPE from '../../../constants/userProperties';
 import Engine from '../../../core/Engine';
 import { resetVaultBackup } from '../../../core/backupVault';
 
@@ -11,10 +10,8 @@ const useDeleteWallet = () => {
   const resetWalletState = useCallback(async () => {
     try {
       await Engine.resetState();
+      await Authentication.resetPassword();
       await resetVaultBackup();
-      await Authentication.newWalletAndKeychain(`${Date.now()}`, {
-        currentAuthType: AUTHENTICATION_TYPE.UNKNOWN,
-      });
       await Authentication.lockApp();
     } catch (error: any) {
       const errorMsg = `Failed to createNewVaultAndKeychain: ${error}`;

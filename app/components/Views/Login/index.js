@@ -315,7 +315,11 @@ class Login extends PureComponent {
               this.state.password,
               authData.type,
             );
-            navigation.navigate(...createRestoreWalletNavDetails());
+            navigation.navigate(
+              ...createRestoreWalletNavDetails({
+                previousScreen: Routes.ONBOARDING.LOGIN,
+              }),
+            );
           } catch (e) {
             Logger.log(
               'Login handleVaultCorruption',

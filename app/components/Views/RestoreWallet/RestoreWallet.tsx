@@ -7,7 +7,10 @@ import Text, {
   TextVariants,
 } from '../../../component-library/components/Texts/Text';
 import StyledButton from '../../UI/StyledButton';
-import { createNavigationDetails } from '../../../util/navigation/navUtils';
+import {
+  createNavigationDetails,
+  useParams,
+} from '../../../util/navigation/navUtils';
 import Routes from '../../../constants/navigation/Routes';
 import EngineService from '../../../core/EngineService';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -21,10 +24,14 @@ import generateDeviceAnalyticsMetaData from '../../../util/metrics';
 
 /* eslint-disable import/no-commonjs, @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports */
 const onboardingDeviceImage = require('../../../images/swaps_onboard_device.png');
+interface RestoreWalletParams {
+  previousScreen: string;
+}
 
-export const createRestoreWalletNavDetails = createNavigationDetails(
-  Routes.VAULT_RECOVERY.RESTORE_WALLET,
-);
+export const createRestoreWalletNavDetails =
+  createNavigationDetails<RestoreWalletParams>(
+    Routes.VAULT_RECOVERY.RESTORE_WALLET,
+  );
 
 const RestoreWallet = () => {
   const { colors } = useAppThemeFromContext();
@@ -35,13 +42,14 @@ const RestoreWallet = () => {
   const { navigate } = useNavigation();
 
   const deviceMetaData = useMemo(() => generateDeviceAnalyticsMetaData(), []);
+  const { previousScreen } = useParams<RestoreWalletParams>();
 
   useEffect(() => {
     AnalyticsV2.trackEvent(
       MetaMetricsEvents.VAULT_CORRUPTION_RESTORE_WALLET_SCREEN_VIEWED,
-      deviceMetaData,
+      { deviceMetaData, previousScreen },
     );
-  }, [deviceMetaData]);
+  }, [deviceMetaData, previousScreen]);
 
   const handleOnNext = useCallback(async () => {
     setLoading(true);

@@ -59,7 +59,7 @@ const RestoreWallet = () => {
     );
   }, [deviceMetaData, previousScreen]);
 
-  const handleOnNext = useCallback(async () => {
+  const handleOnNext = useCallback(async (): Promise<void> => {
     setLoading(true);
     AnalyticsV2.trackEvent(
       MetaMetricsEvents.VAULT_CORRUPTION_RESTORE_WALLET_BUTTON_PRESSED,

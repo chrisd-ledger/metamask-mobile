@@ -2,6 +2,10 @@ import UntypedEngine from './Engine';
 import AppConstants from './AppConstants';
 import { getVaultFromBackup } from '../core/backupVault';
 import { store as importedStore } from '../store';
+import {
+  NO_VAULT_IN_BACKUP_ERROR,
+  VAULT_CREATION_ERROR,
+} from '../constants/error';
 
 const UPDATE_BG_STATE_KEY = 'UPDATE_BG_STATE';
 const INIT_BG_STATE_KEY = 'INIT_BG_STATE';
@@ -10,10 +14,6 @@ interface InitializeEngineResult {
   success: boolean;
   error?: string;
 }
-
-const VAULT_CREATION_ERROR = 'Error creating the vault';
-const NO_VAULT_IN_BACKUP_ERROR = 'No vault in backup';
-
 class EngineService {
   private engineInitialized = false;
 
@@ -95,6 +95,11 @@ class EngineService {
   /**
    * Initialize the engine with a backup vault from the Secure KeyChain
    *
+   * @returns Promise<InitializeEngineResult>
+   *  InitializeEngineResult {
+        success: boolean;
+        error?: string;
+      }
    */
   async initializeVaultFromBackup(): Promise<InitializeEngineResult> {
     const keyringState = await getVaultFromBackup();

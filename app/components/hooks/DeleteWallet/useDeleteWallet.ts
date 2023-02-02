@@ -5,12 +5,16 @@ import { EXISTING_USER } from '../../../constants/storage';
 import { Authentication } from '../../../core';
 import Engine from '../../../core/Engine';
 import { resetVaultBackup } from '../../../core/backupVault';
+import AUTHENTICATION_TYPE from '../../../constants/userProperties';
 
 const useDeleteWallet = () => {
   const resetWalletState = useCallback(async () => {
     try {
       await Engine.resetState();
       await Authentication.resetPassword();
+      await Authentication.newWalletAndKeychain(`${Date.now()}`, {
+        currentAuthType: AUTHENTICATION_TYPE.UNKNOWN,
+      });
       await resetVaultBackup();
       await Authentication.lockApp();
     } catch (error: any) {

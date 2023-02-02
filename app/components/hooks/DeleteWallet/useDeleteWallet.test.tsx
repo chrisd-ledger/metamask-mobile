@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import useDeleteWallet from './useDeleteWallet';
 import { Authentication } from '../../../core';
 import Engine from '../../../core/Engine';
+import AUTHENTICATION_TYPE from '../../../constants/userProperties';
 
 jest.mock('../../../core/Engine', () => ({
   resetState: jest.fn(),
@@ -25,11 +26,16 @@ describe('useDeleteWallet', () => {
     const { result } = renderHook(() => useDeleteWallet());
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [resetWalletState, _] = result.current;
-    const resetPassword = jest.spyOn(Authentication, 'resetPassword');
+    const newWalletAndKeychain = jest.spyOn(
+      Authentication,
+      'newWalletAndKeychain',
+    );
     const resetStateSpy = jest.spyOn(Engine, 'resetState');
     await resetWalletState();
     expect(resetStateSpy).toHaveBeenCalledTimes(1);
-    expect(resetPassword).toHaveBeenCalledTimes(1);
+    expect(newWalletAndKeychain).toHaveBeenCalledWith('123', {
+      currentAuthType: AUTHENTICATION_TYPE.UNKNOWN,
+    });
   });
 
   test('it should call the appropriate methods to delete the user', async () => {

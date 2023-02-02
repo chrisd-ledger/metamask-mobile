@@ -23,6 +23,7 @@ import { useAppThemeFromContext } from '../../../util/theme';
 import { MetaMetricsEvents } from '../../../core/Analytics';
 import AnalyticsV2 from '../../../util/analyticsV2';
 import generateDeviceAnalyticsMetaData from '../../../util/metrics';
+import { SRP_GUIDE_URL } from '../../../constants/urls';
 
 export const createWalletRestoredNavDetails = createNavigationDetails(
   Routes.VAULT_RECOVERY.WALLET_RESTORED,
@@ -47,7 +48,7 @@ const WalletRestored = () => {
     );
   }, [deviceMetaData]);
 
-  const finishWalletRestore = useCallback(async () => {
+  const finishWalletRestore = useCallback(async (): Promise<void> => {
     try {
       await Authentication.appTriggeredAuth(selectedAddress);
       navigation.navigate(Routes.ONBOARDING.HOME_NAV);
@@ -57,14 +58,11 @@ const WalletRestored = () => {
     }
   }, [navigation, selectedAddress]);
 
-  const backupSRPURL =
-    'https://metamask.zendesk.com/hc/en-us/articles/360060826432-What-is-a-Secret-Recovery-Phrase-and-how-to-keep-your-crypto-wallet-secure';
-
-  const onPressBackupSRP = useCallback(async () => {
-    Linking.openURL(backupSRPURL);
+  const onPressBackupSRP = useCallback(async (): Promise<void> => {
+    Linking.openURL(SRP_GUIDE_URL);
   }, []);
 
-  const handleOnNext = useCallback(async () => {
+  const handleOnNext = useCallback(async (): Promise<void> => {
     setLoading(true);
     AnalyticsV2.trackEvent(
       MetaMetricsEvents.VAULT_CORRUPTION_WALLET_SUCCESSFULLY_RESTORED_CONTINUE_BUTTON_PRESSED,

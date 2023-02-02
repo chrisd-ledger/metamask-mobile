@@ -7,6 +7,10 @@ import {
   Options,
   ACCESSIBLE,
 } from 'react-native-keychain';
+import {
+  VAULT_BACKUP_FAILED,
+  VAULT_BACKUP_FAILED_UNDEFINED,
+} from '../constants/error';
 
 const VAULT_BACKUP_KEY = 'VAULT_BACKUP';
 
@@ -25,6 +29,15 @@ interface FetchKeyringFromBackupResponse {
   vault?: string;
 }
 
+/**
+ * places the vault in react-native-keychain for backup
+ * @returns Promise<KeyringBackupResponse>
+  interface KeyringBackupResponse {
+    success: boolean;
+    message: string;
+    state?: KeyringState;
+  }
+ */
 export async function backupVault(
   keyringState: KeyringState,
 ): Promise<KeyringBackupResponse> {
@@ -36,14 +49,13 @@ export async function backupVault(
       options,
     );
     if (backupResult === false) {
-      Logger.log(VAULT_BACKUP_KEY, 'Vault backup failed');
+      Logger.error(VAULT_BACKUP_KEY, VAULT_BACKUP_FAILED);
       const response: KeyringBackupResponse = {
         success: false,
-        message: 'Vault backup failed',
+        message: VAULT_BACKUP_FAILED,
       };
       return response;
     }
-    Logger.log(VAULT_BACKUP_KEY, 'Vault successfully backed up');
     const response: KeyringBackupResponse = {
       success: true,
       message: 'Vault successfully backed up',
@@ -54,24 +66,35 @@ export async function backupVault(
     };
     return response;
   }
-  Logger.log(VAULT_BACKUP_KEY, 'Unable to backup vault as it is undefined');
+  Logger.error(VAULT_BACKUP_KEY, VAULT_BACKUP_FAILED_UNDEFINED);
   const response: KeyringBackupResponse = {
     success: false,
-    message: 'Unable to backup vault as it is undefined',
+    message: VAULT_BACKUP_FAILED_UNDEFINED,
   };
   return response;
 }
 
+/**
+ * retrieves the vault backup from react-native-keychain
+ * @returns Promise<FetchKeyringFromBackupResponse>
+ * FetchKeyringFromBackupResponse {
+    success: boolean;
+    vault?: string;
+  }
+ */
 export async function getVaultFromBackup(): Promise<FetchKeyringFromBackupResponse> {
-  Logger.log(VAULT_BACKUP_KEY, 'getVaultFromBackup');
   const credentials = await getInternetCredentials(VAULT_BACKUP_KEY);
   if (credentials) {
     return { success: true, vault: credentials.password };
   }
+  Logger.error(VAULT_BACKUP_KEY, 'getVaultFromBackup failed to retrieve vault');
   return { success: false };
 }
 
-export const resetVaultBackup = async () => {
-  Logger.log(VAULT_BACKUP_KEY, 'resetting vault backup');
+/**
+ * removes the vault backup from react-native-keychain
+ * @returns Promise<Void>
+ */
+export const resetVaultBackup = async (): Promise<void> => {
   await resetInternetCredentials(VAULT_BACKUP_KEY);
 };

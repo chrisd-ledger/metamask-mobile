@@ -294,8 +294,6 @@ class Login extends PureComponent {
 
   handleVaultCorruption = async (error) => {
     const { navigation } = this.props;
-    // navigate to recovery flow
-
     const { vault } = await getVaultFromBackup();
 
     if (vault && this.state.password) {

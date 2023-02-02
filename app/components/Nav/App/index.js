@@ -171,10 +171,6 @@ const VaultRecoveryFlow = () => (
   >
     <Stack.Screen
       name={Routes.VAULT_RECOVERY.RESTORE_WALLET}
-      // options={{ unmountOnBlur: true }}
-      // listeners={({ navigation }) => ({
-      //   blur: () => navigation.setParams({ previousScreen: undefined }),
-      // })}
       component={RestoreWallet}
     />
     <Stack.Screen

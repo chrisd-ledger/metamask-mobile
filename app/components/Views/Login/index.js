@@ -49,7 +49,7 @@ import {
 } from '../../../constants/test-ids';
 import { LoginOptionsSwitch } from '../../UI/LoginOptionsSwitch';
 import generateTestId from '../../../../wdio/utils/generateTestId';
-import { createRestoreWalletNavDetails } from '../RestoreWallet/RestoreWallet';
+import { createRestoreWalletNavDetailsNested } from '../RestoreWallet/RestoreWallet';
 import { parseVaultValue } from '../../../util/validators';
 import { getVaultFromBackup } from '../../../core/backupVault';
 
@@ -316,7 +316,7 @@ class Login extends PureComponent {
               authData.type,
             );
             navigation.navigate(
-              ...createRestoreWalletNavDetails({
+              ...createRestoreWalletNavDetailsNested({
                 previousScreen: Routes.ONBOARDING.LOGIN,
               }),
             );

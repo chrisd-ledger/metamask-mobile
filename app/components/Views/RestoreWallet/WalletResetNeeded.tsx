@@ -55,11 +55,15 @@ const WalletResetNeeded = () => {
       MetaMetricsEvents.VAULT_CORRUPTION_WALLET_RESET_NEEDED_TRY_AGAIN_BUTTON_PRESSED,
       deviceMetaData,
     );
-    navigation.replace(
-      ...createRestoreWalletNavDetails({
-        previousScreen: Routes.VAULT_RECOVERY.WALLET_RESET_NEEDED,
-      }),
-    );
+    // navigation.navigate(
+    //   ...createRestoreWalletNavDetails({
+    //     previousScreen: Routes.VAULT_RECOVERY.WALLET_RESET_NEEDED,
+    //   }),
+    // );
+    // previousScreen: Routes.VAULT_RECOVERY.WALLET_RESET_NEEDED,
+    navigation.navigate(Routes.VAULT_RECOVERY.RESTORE_WALLET, {
+      previousScreen: Routes.VAULT_RECOVERY.WALLET_RESET_NEEDED,
+    });
   }, [deviceMetaData, navigation]);
 
   return (

@@ -28,8 +28,16 @@ interface RestoreWalletParams {
   previousScreen: string;
 }
 
+// navigation.navigate(Routes.VAULT_RECOVERY.RESTORE_WALLET, {
+//   screen: Routes.VAULT_RECOVERY.RESTORE_WALLET,
+//   params: {
+//     previousScreen: Routes.ONBOARDING.LOGIN,
+//   },
+// });
+
 export const createRestoreWalletNavDetails =
   createNavigationDetails<RestoreWalletParams>(
+    Routes.VAULT_RECOVERY.RESTORE_WALLET,
     Routes.VAULT_RECOVERY.RESTORE_WALLET,
   );
 
@@ -39,17 +47,28 @@ const RestoreWallet = () => {
 
   const [loading, setLoading] = useState<boolean>(false);
 
-  const { navigate } = useNavigation();
+  const navigation = useNavigation();
 
   const deviceMetaData = useMemo(() => generateDeviceAnalyticsMetaData(), []);
-  const { previousScreen } = useParams<RestoreWalletParams>();
+  const params = useParams<RestoreWalletParams>();
+  console.log('vault/', JSON.stringify(params));
+
+  // useEffect(
+  //   () =>
+  //     function cleanup() {
+  //       console.log('vault/ calling cleanup function');
+  //       setLoading(false);
+  //       navigation.setParams({ previousScreen: undefined });
+  //     },
+  //   [navigation],
+  // );
 
   useEffect(() => {
     AnalyticsV2.trackEvent(
       MetaMetricsEvents.VAULT_CORRUPTION_RESTORE_WALLET_SCREEN_VIEWED,
-      { deviceMetaData, previousScreen },
+      { deviceMetaData, params },
     );
-  }, [deviceMetaData, previousScreen]);
+  }, [deviceMetaData, params]);
 
   const handleOnNext = useCallback(async () => {
     setLoading(true);
@@ -59,11 +78,14 @@ const RestoreWallet = () => {
     );
     const restoreResult = await EngineService.initializeVaultFromBackup();
     if (restoreResult.success) {
-      navigate(...createWalletRestoredNavDetails());
+      // navigate(...createWalletRestoredNavDetails());
+      setLoading(true);
+      // navigation.setParams(undefined);
+      navigation.navigate(...createWalletResetNeededNavDetails());
     } else {
-      navigate(...createWalletResetNeededNavDetails());
+      navigation.navigate(...createWalletResetNeededNavDetails());
     }
-  }, [deviceMetaData, navigate]);
+  }, [deviceMetaData, navigation]);
 
   return (
     <SafeAreaView style={styles.screen}>

@@ -1235,11 +1235,7 @@
 					"\"$(SRCROOT)/MetaMask/System/Library/Frameworks\"",
 				);
 				LLVM_LTO = YES;
-<<<<<<< HEAD
 				MARKETING_VERSION = 5.14.0;
-=======
-				MARKETING_VERSION = 5.14.2;
->>>>>>> 58589640c (test build 1056)
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"$(inherited)",

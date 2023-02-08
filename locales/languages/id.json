@@ -97,8 +97,7 @@
     "step4": {
       "title": "Navigasi Utama",
       "content1": "Ketuk di sini",
-      "content2": "untuk mengakses aktivitas Dompet, Peramban, dan Transaksi Anda.",
-      "content3": "Anda dapat melakukan berbagai tindakan dengan akun Anda & mengakses pengaturan MetaMask."
+      "content2": "untuk mengakses aktivitas Dompet, Peramban, dan Transaksi Anda."
     },
     "step5": {
       "title": "Jelajahi Peramban",
@@ -259,7 +258,7 @@
   },
   "send": {
     "title": "Kirim",
-    "deeplink_failure": "Ups! Terjadi kesalahan! Silakan coba lagi",
+    "deeplink_failure": "Aduh! Terjadi kesalahan! Silakan coba lagi",
     "warn_network_change": "Jaringan diubah ke",
     "send_to": "Kirim ke",
     "amount": "Jumlah",
@@ -379,7 +378,10 @@
   },
   "privacy_policy": {
     "title": "Kebijakan Privasi",
-    "description": "Data ini dikumpulkan dan oleh karena itu bersifat anonim untuk tujuan Regulasi Perlindungan Data (UE) 2016/679. Untuk informasi selengkapnya terkait praktik privasi kami, lihat Kebijakan Privasi kami",
+    "fine_print_1": "Data ini dikumpulkan sehingga bersifat anonim untuk tujuan Peraturan Perlindungan Data Umum (UE) 2016/679.",
+    "fine_print_2a": "*Saat Anda menggunakan Infura sebagai penyedia RPC default di MetaMask, Infura akan mengumpulkan alamat IP dan alamat dompet Ethereum Anda saat mengirim transaksi. Kami tidak menyimpan informasi ini dengan cara yang memungkinkan sistem kami menghubungkan kedua bagian data tersebut. Anda bisa mengonfigurasi penyedia RPC",
+    "fine_print_2b": "sebelum melanjutkan.\nUntuk informasi selengkapnya seputar cara MetaMask dan Infura berinteraksi dari perspektif pengumpulan data, lihat pembaruan kami",
+    "fine_print_2c": ". Untuk informasi lebih lanjut terkait praktik privasi kami secara umum, lihat Kebijakan Privasi kami",
     "here": "di sini",
     "agree": "Saya Setuju",
     "decline": "Tidak, terima kasih",
@@ -391,7 +393,9 @@
     "action_description_3": "Akan mengirimkan data negara, wilayah, kota (bukan lokasi spesifik)",
     "action_description_4": "Tidak akan pernah mengumpulkan kunci, alamat, transaksi, saldo, hash, atau informasi pribadi apa pun",
     "action_description_5": "Tidak akan pernah mengumpulkan alamat IP Anda",
-    "action_description_6": "Tidak akan pernah menjual data untuk mendapatkan keuntungan. Selamanya!"
+    "action_description_never": "Jangan pernah",
+    "cta_no_thanks": "Tidak, terima kasih",
+    "cta_i_agree": "Saya setuju"
   },
   "token": {
     "token_symbol": "Simbol Token",
@@ -415,7 +419,7 @@
     "address_must_be_smart_contract": "Alamat pribadi terdeteksi. Masukkan alamat kontrak koleksi.",
     "address_cant_be_empty": "Alamat koleksi wajib diisi.",
     "token_id_cant_be_empty": "Pengenal koleksi wajib diisi.",
-    "not_owner_error_title": "Ups! Terjadi sesuatu.",
+    "not_owner_error_title": "Aduh! Terjadi sesuatu.",
     "not_owner_error": "Anda bukan pemilik koleksi ini, jadi Anda tidak dapat menambahkannya.",
     "ownership_verification_error_title": "Tidak dapat menambahkan NFT",
     "ownership_verification_error": "Kami tidak dapat memverifikasi kepemilikan. Ini mungkin karena standar tidak didukung atau aset tidak ada di jaringan yang Anda pilih.",
@@ -456,9 +460,8 @@
     "connect": "Hubungkan",
     "connect_with_count": "Hubungkan{{countLabel}}",
     "select_all": "Pilih semua",
+    "unselect_all": "Batal pilih semua",
     "permissions": "Izin",
-    "disconnect": "Putuskan koneksi",
-    "disconnect_all_accounts": "Putuskan koneksi semua akun",
     "revoke": "Cabut",
     "revoke_all": "Cabut semua"
   },
@@ -568,6 +571,8 @@
     "back": "Kembali",
     "security_desc": "Pengaturan privasi, MetaMetrics, kunci pribadi, dan Frasa Pemulihan Rahasia dompet",
     "networks_title": "Jaringan",
+    "networks_default_title": "Jaringan Default",
+    "networks_default_cta": "Gunakan jaringan ini",
     "networks_desc": "Tambahkan dan edit jaringan RPC khusus",
     "network_name_label": "Nama Jaringan",
     "network_name_placeholder": "Nama Jaringan (opsional)",
@@ -660,7 +665,23 @@
     "delete_data_status_description": "Status saat ini adalah",
     "delete_metrics_error_title": "Kami tidak dapat menghapus data ini sekarang.",
     "delete_metrics_error_description": "Permintaan ini tidak dapat diselesaikan sekarang karena masalah server sistem analitis, coba lagi nanti.",
-    "ok": "Oke"
+    "ok": "Oke",
+    "clear_sdk_connections_title": "Hapus semua Koneksi SDK MetaMask",
+    "clear_sdk_connections_text": "Semua koneksi akan dihapus dan aplikasi terdesentralisasi (dapps) perlu meminta koneksi lagi",
+    "sdk_connections": "Koneksi SDK MetaMask",
+    "fiat_on_ramp": {
+      "title": "Beli Kripto",
+      "description": "Wilayah & lainnya...",
+      "current_region": "Wilayah Saat Ini",
+      "reset_region": "Reset Wilayah",
+      "no_region_selected": "Tidak ada wilayah yang dipilih",
+      "sdk_activation_keys": "Kunci Aktivasi SDK",
+      "activation_keys_description": "Kunci Aktivasi akan mengaktifkan fitur atau penyedia tertentu.",
+      "add_activation_key": "Tambahkan Kunci Aktivasi",
+      "paste_or_type_activation_key": "Tempel atau ketik Kunci Aktivasi",
+      "add": "Tambah",
+      "cancel": "Batal"
+    }
   },
   "app_information": {
     "title": "Informasi",
@@ -850,6 +871,7 @@
     "get_ether": "Dapatkan Ether untuk jaringan {{networkName}}.",
     "insufficient_tokens": "{{token}} tidak cukup",
     "invalid_address": "Alamat tidak valid",
+    "invalid_from_address": "Alamat pengirim tidak valid",
     "invalid_amount": "Jumlah tidak valid",
     "invalid_gas": "Jumlah gas tidak valid",
     "invalid_gas_price": "Harga gas tidak valid",
@@ -899,7 +921,7 @@
     "submitted": "Dikirim",
     "failed": "Gagal",
     "cancelled": "Dibatalkan",
-    "tokenContractAddressWarning_1": "PERINGATAN: Alamat ini merupakan",
+    "tokenContractAddressWarning_1": "Alamat ini merupakan ",
     "tokenContractAddressWarning_2": "alamat kontrak token.",
     "tokenContractAddressWarning_3": "Jika Anda mengirim token ke alamat ini, maka token milik Anda akan hilang.",
     "smartContractAddressWarning": "Alamat ini merupakan alamat kontrak pintar. Pastikan Anda memahami fungsi dari alamat ini, jika tidak, dana Anda berisiko hilang.",
@@ -926,7 +948,9 @@
     "invalid_qr_code_sign": "Kode QR tidak valid. Harap periksa perangkat keras Anda dan coba lagi.",
     "no_camera_permission_android": "Izinkan MetaMask mengakses kamera Anda untuk melanjutkan. Anda juga perlu mengubah pengaturan sistem.",
     "mismatched_qr_request_id": "Data transaksi tidak sesuai. Gunakan Keystone Anda untuk menandatangani kode QR di bawah ini dan ketuk 'Dapatkan Tanda Tangan'.",
-    "hex_data_copied": "Data hex disalin ke papan klip"
+    "hex_data_copied": "Data hex disalin ke papan klip",
+    "invalid_recipient": "Penerima tidak valid",
+    "invalid_recipient_description": "Periksa alamatnya dan pastikan sudah valid"
   },
   "custom_gas": {
     "total": "Total",
@@ -988,7 +1012,7 @@
     "share": "Bagikan",
     "bookmark": "Penanda",
     "add_to_favorites": "Tambahkan ke Favorit",
-    "error": "Ups!",
+    "error": "Kesalahan",
     "cancel": "Batal",
     "go_back": "Kembali",
     "go_forward": "Maju",
@@ -1012,7 +1036,16 @@
     "failed_to_resolve_ens_name": "Kami tidak dapat menyelesaikan nama ENS tersebut",
     "remove_bookmark_title": "Hapus favorit",
     "remove_bookmark_msg": "Yakin ingin menghapus situs ini dari favorit Anda?",
-    "yes": "Ya"
+    "yes": "Ya",
+    "protocol_alert_options": {
+      "ignore": "Abaikan",
+      "allow": "Izinkan"
+    },
+    "protocol_alerts": {
+      "tel": "Situs web ini telah diblokir agar tidak melakukan panggilan telepon secara otomatis",
+      "mailto": "Situs web ini telah diblokir agar tidak menulis surel secara otomatis.",
+      "generic": "Situs web ini telah diblokir agar tidak membuka aplikasi eksternal secara otomatis"
+    }
   },
   "backup_alert": {
     "title": "Lindungi dompet Anda",
@@ -1138,7 +1171,7 @@
     "invalid_qr_code_desc": "Ini bukan kode QR yang benar! Untuk menyinkronkan dengan ekstensi peramban Anda, buka \"Pengaturan\" > \"Lanjutan\" > Sinkronkan dengan Ponsel pada ekstensi peramban dan pindai QR di sana",
     "outdated_qr_code": "Kode QR kedaluwarsa",
     "outdated_qr_code_desc": "Tampaknya kode QR ini telah kedaluwarsa! Cobalah untuk memindai kode baru",
-    "something_wrong": "Ups! Terjadi kesalahan...",
+    "something_wrong": "Terjadi kesalahan",
     "something_wrong_desc": "Kami mengalami masalah saat mencoba menyinkronkan dompet Anda. Silakan coba lagi nanti atau impor dompet Anda menggunakan Frasa Pemulihan Rahasia",
     "allow_biometrics_title": "Apakah Anda ingin mengaktifkan {{biometrics}}?",
     "allow_biometrics_desc": "Anda bisa menggunakan {{biometrics}} untuk melakukan autentikasi di MetaMask"
@@ -1188,7 +1221,8 @@
     "empty_popular_networks": "Anda telah menambahkan semua jaringan yang populer. Anda dapat menemukan lebih banyak jaringan",
     "add_other_network_here": "di sini.",
     "you_can": "Atau Anda dapat",
-    "add_network": "menambahkan lebih banyak jaringan secara manual."
+    "add_network": "menambahkan lebih banyak jaringan secara manual.",
+    "deprecated_network_msg": "Sehubungan dengan perubahan protokol Ethereum: jaringan uji Rinkeby, Ropsten, Kovan mungkin tidak dapat beroperasi dengan baik dan akan segera dihentikan."
   },
   "select": {
     "cancel": "Batal",
@@ -1266,7 +1300,7 @@
     "subtitle": "Tempel deret kunci pribadi Anda",
     "cta_text": "IMPOR",
     "example": "mis., 3a1076bf45ab87712ad64ccb3b10217737f7faacbf2872e88fdd9a537d8fe266",
-    "error_title": "Ups! Terjadi kesalahan...",
+    "error_title": "Terjadi kesalahan",
     "error_message": "Kami tidak dapat mengimpor kunci pribadi tersebut. Pastikan Anda memasukkannya dengan benar.",
     "error_empty_message": "Masukkan kunci pribadi Anda.",
     "or_scan_a_qr_code": "atau Pindai Kode QR"
@@ -1409,7 +1443,9 @@
     "view": "Lihat",
     "confirm_password": "Konfirmasikan kata sandi Anda",
     "before_continiuing": "Sebelum melanjutkan, konfirmasikan kata sandi Anda terlebih dulu",
-    "confirm": "KONFIRMASIKAN"
+    "confirm": "KONFIRMASIKAN",
+    "got_it": "Mengerti",
+    "learn_more": "Pelajari Selengkapnya"
   },
   "manual_backup_step_2": {
     "action": "Konfirmasikan Frasa Pemulihan Rahasia",
@@ -1477,7 +1513,9 @@
     "wc_sent_tx_title": "Transaksi terkirim",
     "wc_connected_rejected_title": "Anda telah menolak permintaan koneksi",
     "wc_signed_rejected_title": "Anda telah menolak permintaan tanda tangan",
+    "wc_signed_failed_title": "Permintaan penandatanganan ini gagal",
     "wc_sent_tx_rejected_title": "Anda telah menolak permintaan transaksi",
+    "approved_tx_rejected_title": "Anda telah menolak memberikan izin",
     "wc_description": "Harap periksa aplikasi ini"
   },
   "protect_your_wallet_modal": {
@@ -1545,7 +1583,9 @@
     "end": "Akhiri",
     "cancel": "Batal",
     "session_ended_title": "Sesi Berakhir",
-    "session_ended_desc": "Sesi yang dipilih telah dihentikan"
+    "session_ended_desc": "Sesi yang dipilih telah dihentikan",
+    "session_already_exist": "Sesi ini sudah terhubung.",
+    "close_current_session": "Tutup sesi saat ini sebelum memulai yang baru."
   },
   "paymentRequest": {
     "title": "PERMINTAAN PEMBAYARAN",
@@ -1556,9 +1596,8 @@
     "total": "TOTAL:"
   },
   "webview_error": {
-    "title": "Ups! Terjadi kesalahan...",
-    "message": "Kami tidak dapat memuat halaman tersebut.",
-    "reason": "Alasan",
+    "title": "Terjadi kesalahan",
+    "message": "Kami tidak dapat memuat halaman tersebut",
     "return_home": "Kembali ke beranda"
   },
   "offline_mode": {
@@ -1693,12 +1732,13 @@
       "hours": "jam",
       "business_day": "hari kerja",
       "business_days": "hari kerja",
-      "lowest_limit": "batas terendah",
-      "medium_limit": "batas medium",
-      "highest_limit": "batas tertinggi",
-      "apple_cash_not_supported": "Tidak mendukung Apple Cash.",
-      "card_fees": "Hubungi penyedia kartu Anda untuk mencari tahu biaya apa saja yang mungkin dikenakan kepada Anda. Misalnya, pembelian kartu kredit mungkin dikenakan biaya penarikan tunai.",
-      "continue_to_amount": "Lanjutkan ke jumlah"
+      "lowest_limit": "batas pembelian terendah",
+      "medium_limit": "batas pembelian medium",
+      "highest_limit": "batas pembelian tertinggi",
+      "continue_to_amount": "Lanjutkan ke jumlah",
+      "no_payment_methods_title": "Tidak ada Metode Pembayaran di {{regionName}}",
+      "no_payment_methods_description": "Saat ini tidak ada metode pembayaran yang didukung di wilayah Anda. Mohon periksa kembali secepatnya; kami sering melakukan ekspansi dukungan ke wilayah baru.\n\nJika Anda tidak sengaja memilih {{regionName}}, klik tombol di bawah untuk mereset wilayah Anda.",
+      "reset_region": "Reset Wilayah"
     },
     "continue": "Lanjutkan",
     "new_quotes_in": "Kuotasi baru di",
@@ -1741,7 +1781,7 @@
     "try_different_amount_to_buy_input": "Coba pilih metode pembayaran lain atau coba tambahkan atau kurangi jumlah yang ingin Anda beli!",
     "webview_received_error": "WebView menerima kode status galat: {{code}}",
     "no_tokens_available_title": "Token Tidak Tersedia",
-    "no_tokens_available": "There are currently no cryptocurrencies available to purchase on {{network}} in {{region}}",
+    "no_tokens_available": "Saat ini tidak ada token yang tersedia untuk dibeli di {{network}} dengan metode pembayaran yang dipilih.",
     "change_payment_method": "Ubah metode pembayaran",
     "try_different_region": "Coba wilayah lain",
     "return_home": "Kembali ke Layar Beranda",
@@ -1779,7 +1819,7 @@
       "etherscan": "Lihat detail lengkap di",
       "another_purchase": "Buat pembelian lain",
       "questions": "Pertanyaan?",
-      "contact_support": "Hubungi dukungan",
+      "contact_support": "Hubungi Dukungan",
       "support": "Dukungan",
       "view_order_status": "Lihat status pesanan di {{provider}}",
       "id": "ID Pesanan",
@@ -1899,7 +1939,8 @@
       "best_price": "harga terbaik",
       "from_the": "dari",
       "top_liquidity": "sumber likuiditas teratas setiap saat.",
-      "fee_is_applied": "Biaya sebesar {{fee}} secara otomatis diperhitungkan dalam setiap kuotasi, yang mendukung pengembangan berkelanjutan untuk menjadikan MetaMask lebih baik."
+      "fee_is_applied": "Biaya sebesar {{fee}} otomatis diperhitungkan ke dalam kuotasi ini. Anda membayarnya sebagai ganti lisensi untuk menggunakan perangkat lunak pengumpul informasi penyedia likuiditas MetaMask.",
+      "fee_is_not_applied": "MetaMask tidak menyertakan biaya tambahan dalam kuotasi ini."
     },
     "enable": {
       "this_will": "Ini akan",
@@ -2067,7 +2108,7 @@
       "market_label": "Pasar",
       "market_text": "Gunakan Pasar untuk memprediksi harga pasar saat ini.",
       "low_label": "Rendah",
-      "low_text": "Biaya gas yang rendah hanya boleh digunakan untuk transaksi yang kurang penting atau saat lalu lintas jaringan sangat rendah. Dengan biaya yang lebih rendah, sulit untuk memprediksi kapan (atau jika) transaksi Anda akan berhasil.",
+      "low_text": "Gunakan Rendah untuk menunggu harga yang lebih murah. Estimasi waktu kurang akurat karena harga sedang tidak dapat diprediksi.",
       "link": "Pelajari selengkapnya seputar penyesuaian gas."
     },
     "save": "Simpan",
@@ -2172,7 +2213,7 @@
     "private_network_third_description": "Masukkan nama untuk jaringan ini agar mudah diidentifikasi.",
     "learn_more_url": "https://metamask.zendesk.com/hc/en-us/articles/4404424659995",
     "enable_token_detection": "Aktifkan deteksi token otomatis",
-    "token_detection_mainnet_title": "Deteksi token diaktifkan sehingga banyak token akan muncul di dompet Anda secara otomatis.",
+    "token_detection_mainnet_title": "Deteksi token diaktifkan sehingga token-token akan muncul di dompet Anda secara otomatis.",
     "token_detection_mainnet_link": "Anda juga dapat menambahkan token secara manual.",
     "or": "atau"
   },
@@ -2212,6 +2253,44 @@
     "description": "Memeriksa pembaruan secara otomatis dapat menampilkan alamat IP Anda ke server GitHub. Ini hanya menunjukkan bahwa alamat IP Anda sedang menggunakan MetaMask. Tidak ada alamat akun atau informasi lainnya yang ditampilkan.",
     "primary_action": "Aktifkan pemeriksaan keamanan otomatis",
     "secondary_action": "Tidak, terima kasih"
+  },
+  "contract_allowance": {
+    "custom_spend_cap": {
+      "max": "Maks",
+      "edit": "Edit",
+      "title": "Batas pengeluaran khusus",
+      "use_default": "Gunakan default",
+      "from_your_balance": "dari saldo Anda saat ini.",
+      "no_value_selected": "Hanya masukkan nomor yang nyaman untuk Anda akses {{domain}} sekarang atau di masa mendatang. Anda selalu dapat meningkatkan batas token nanti.",
+      "this_contract_allows": "Kontrak ini memungkinkan situs untuk menghabiskan",
+      "from_your_current_balance": "dari saldo Anda saat ini, dan juga",
+      "future_tokens": "yang mungkin Anda miliki di masa mendatang. Token Anda berpotensi mengalami risiko.",
+      "info_modal_description_default": "Kontrak dapat mempergunakan seluruh saldo token Anda tanpa pemberitahuan atau persetujuan lebih lanjut. Lindungi diri Anda dengan menetapkan batas pengeluaran yang lebih rendah.",
+      "set_spend_cap": "Atur batas pengeluaran",
+      "be_careful": "Berhati-hatilah",
+      "error_enter_number": "Kesalahan: Masukkan angka saja"
+    }
+  },
+  "restore_wallet": {
+    "restore_needed_title": "Pemulihan diperlukan",
+    "restore_needed_description": "Ada yang salah, tetapi jangan khawatir! Mari coba pulihkan dompet Anda.",
+    "restore_needed_action": "Pulihkan dompet"
+  },
+  "wallet_restored": {
+    "wallet_restored_title": "Dompet Anda sudah siap!",
+    "wallet_restored_action": "Lanjutkan ke dompet",
+    "wallet_restored_description_part_one": "Anda perlu menambahkan beberapa aset, jaringan, dan pengaturan lagi secara manual.",
+    "wallet_restored_description_part_two": "Luangkan waktu sejenak untuk",
+    "wallet_restored_description_link": "mencadangkan Frasa Pemulihan Rahasia",
+    "wallet_restored_description_part_three": "bilamana dompet Anda perlu dipulihkan lagi di masa mendatang."
+  },
+  "new_wallet_needed": {
+    "new_wallet_needed_title": "Dompet baru diperlukan",
+    "new_wallet_needed_create_new_wallet_action": "Buat dompet baru",
+    "new_wallet_needed_create_try_again_action": "Coba pulihkan dompet",
+    "new_wallet_needed_description_part_one": "Ada yang salah dengan dompet Anda. Buat yang baru. Karena akun Anda berada di blockchain, maka keamanannya masih terjaga. Hanya preferensi, jaringan tersimpan, nama akun, dan data terkait yang tersimpan di perangkat yang hilang.",
+    "new_wallet_needed_description_part_two": "Untuk mengimpor akun ke dompet baru, Anda memerlukan Frasa Pemulihan Rahasia. Jika tidak memiliki Frasa Pemulihan Rahasia, akun Anda tidak akan bisa diimpor.",
+    "new_wallet_needed_description_part_three": "Agar hal ini tidak terjadi lagi, pastikan untuk selalu memperbarui aplikasi dan OS MetaMask ke versi terbaru."
   },
   "srp_security_quiz": {
     "title": "Kuis keamanan",
